@@ -5,11 +5,10 @@ import {
   CardHeader,
   Tooltip,
   Heading,
-  Stack,
-  StackDivider,
   Text,
   Button,
   Progress,
+  Grid,
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
@@ -26,7 +25,7 @@ interface QuizSectionItemProps {
 
 function QuizSection({ title, items }: QuizSectionProps) {
   return (
-    <Card boxShadow="md">
+    <Card border="1px solid black" borderColor="blackAlpha.100">
       <CardHeader>
         <Box display="flex" flexDir="column" rowGap={4}>
           <Heading size="md">{title}</Heading>
@@ -36,11 +35,19 @@ function QuizSection({ title, items }: QuizSectionProps) {
         </Box>
       </CardHeader>
       <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
+        <Grid
+          templateColumns={[
+            'repeat(1, 1fr)',
+            'repeat(2, 1fr)',
+            'repeat(2, 1fr)',
+            'repeat(4, 1fr)',
+          ]}
+          gap={6}
+        >
           {items?.map((item, itemIdx) => (
             <QuizSectionItem key={itemIdx} {...item} />
           ))}
-        </Stack>
+        </Grid>
       </CardBody>
     </Card>
   );
@@ -57,7 +64,7 @@ function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
   };
 
   return (
-    <Box>
+    <Box boxShadow="base" p={4}>
       <Box display="flex" columnGap={2} alignItems="center">
         <Heading size="xs" textTransform="uppercase">
           {title}

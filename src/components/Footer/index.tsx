@@ -9,10 +9,17 @@ function Footer() {
         <Box
           display="flex"
           alignItems="center"
+          flexDirection={{
+            base: 'column',
+            lg: 'row',
+          }}
           columnGap={4}
-          justifyContent="space-between"
+          justifyContent={{
+            base: 'center',
+            lg: 'space-between',
+          }}
         >
-          <Text>
+          <Text align="center">
             Easy Start German - Just Follow Instructions and Get Confident!
           </Text>
           <Link to="https://github.com/hsk-kr" target="_blank">
