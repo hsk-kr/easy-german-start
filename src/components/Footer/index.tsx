@@ -20,7 +20,7 @@ function Footer() {
           }}
         >
           <Text align="center">
-            Easy Start German - Just Follow Instructions and Get Confident!
+            Easy Start German - Unsure Where To Begin? Simply Solve Quizzes!
           </Text>
           <Link to="https://github.com/hsk-kr" target="_blank">
             <Box display="flex" alignItems="center" columnGap={2}>
