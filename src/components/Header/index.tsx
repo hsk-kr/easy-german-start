@@ -70,8 +70,7 @@ function Header() {
           </Link>
           <IconButton
             display={{
-              base: 'none',
-              sm: 'flex',
+              base: 'flex',
               md: 'none',
             }}
             aria-label="mobile-menu"
