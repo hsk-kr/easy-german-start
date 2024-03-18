@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# Easy German Start
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+You don't know where to start German? Start here!
 
-Currently, two official plugins are available:
+It doesn't make your German fluent. However, you willl find yourself being familar with German more while solving quizzes on `Easy German Start`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+When it comes to learning languages, the most challenge part is that you don't know you're doing well or not. If it is your first time learning languages, it would be more challenging. It's the same for me.
 
-## Expanding the ESLint configuration
+The way I see it, there are four steps in the journey of learning languages.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Memorize some basic vocabulary and be familiar with the target language - A1, A2
 
-- Configure the top-level `parserOptions` property like this:
+2. After being familar with the language, study grammer and practice speaking, listening, reading and writing with any method you prefer. It's really depending on your preference. - A2, B1
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+3. Now, you've started to enjoy activities and contents in your target language even though there are misunderstanding and a lot of mistakes. Just enjoy things in the target language as much as you can. - B1, B2
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+4. Now, you can call you fluent in the language. The next journey will be different depending on your goal. You may be satisfied on your current level or you may want to study more to get into a school, work, or whatever you want.
+
+In those steps, it helps you to overcome the first step.
+
+Welcome to hear your opinions. If you have any opinions, please let us know on the issues tab.
+
+I hope you enjoy the service and hope you the best luck! Enjoy it 👍
