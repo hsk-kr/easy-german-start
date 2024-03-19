@@ -7,8 +7,8 @@ export function QuizListPage() {
 
   for (let i = 0; i < 10; i++) {
     commonWords.push({
-      title: '25 Common Words',
-      desc: '25 Common German Words',
+      title: '10 Common Words',
+      desc: '10 Common German Words',
       done: i % 2 === 0,
     });
   }
@@ -17,10 +17,16 @@ export function QuizListPage() {
     <DefaultTemplate>
       <Container maxW="container.lg" p={0}>
         <VStack spacing={8} align="stretch">
-          <QuizSection title="1. 250 Common Words" items={commonWords} />
-          <QuizSection title="2. 250 Common Words" items={commonWords} />
-          <QuizSection title="3. 250 Common Words" items={commonWords} />
-          <QuizSection title="4. 250 Common Words" items={commonWords} />
+          <QuizSection title="1. 100 Common Words" items={commonWords} />
+          <QuizSection title="2. 100 Common Words" items={commonWords} />
+          <QuizSection title="3. 100 Common Words" items={commonWords} />
+          <QuizSection title="4. 100 Common Words" items={commonWords} />
+          <QuizSection title="5. 100 Common Words" items={commonWords} />
+          <QuizSection title="6. 100 Common Words" items={commonWords} />
+          <QuizSection title="7. 100 Common Words" items={commonWords} />
+          <QuizSection title="8. 100 Common Words" items={commonWords} />
+          <QuizSection title="9. 100 Common Words" items={commonWords} />
+          <QuizSection title="10. 100 Common Words" items={commonWords} />
         </VStack>
       </Container>
     </DefaultTemplate>

@@ -22,30 +22,31 @@ function MobileMenuModal({ visible, onClose }: MobileMenuModalProps) {
   }, [location]);
 
   return (
-    visible && (
-      <Box
-        zIndex={2}
-        position="fixed"
-        top={0}
-        bottom={0}
-        left={0}
-        right={0}
-        bgColor="green.500"
-      >
-        <CloseIcon
-          position="absolute"
-          w={5}
-          h={5}
-          top={5}
-          right={5}
-          onClick={handleClose}
-          cursor="pointer"
-        />
-        <Profile />
-        <Divider />
-        <Navbar />
-      </Box>
-    )
+    <Box
+      zIndex={2}
+      position="fixed"
+      top={0}
+      bottom={0}
+      left={0}
+      right={0}
+      maxH={visible ? '100%' : '0'}
+      transition="all 0.1s"
+      overflow="hidden"
+      bgColor="green.500"
+    >
+      <CloseIcon
+        position="absolute"
+        w={5}
+        h={5}
+        top={5}
+        right={5}
+        onClick={handleClose}
+        cursor="pointer"
+      />
+      <Profile />
+      <Divider />
+      <Navbar />
+    </Box>
   );
 }
 

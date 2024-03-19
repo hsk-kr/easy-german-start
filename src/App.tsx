@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import QuizListPage from './components/QuizListPage/QuizListPage';
 import ProfilePage from './components/ProfilePage';
+import './dayjs';
 
 const router = createBrowserRouter([
   {
