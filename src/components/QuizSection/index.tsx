@@ -9,6 +9,7 @@ import {
   Button,
   Progress,
   Grid,
+  Flex,
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
@@ -27,12 +28,12 @@ function QuizSection({ title, items }: QuizSectionProps) {
   return (
     <Card border="1px solid black" borderColor="blackAlpha.100">
       <CardHeader>
-        <Box display="flex" flexDir="column" rowGap={4}>
+        <Flex flexDir="column" rowGap={4}>
           <Heading size="md">{title}</Heading>
           <Tooltip label="1 / 24 - 60%">
             <Progress hasStripe value={60} maxW="240px" />
           </Tooltip>
-        </Box>
+        </Flex>
       </CardHeader>
       <CardBody>
         <Grid
@@ -65,14 +66,14 @@ function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
 
   return (
     <Box boxShadow="base" p={4}>
-      <Box display="flex" columnGap={2} alignItems="center">
+      <Flex columnGap={2} alignItems="center">
         <Heading size="xs" textTransform="uppercase">
           {title}
         </Heading>
         <Tooltip label={status.tooltip}>
           <CheckCircleIcon color={status.color} />
         </Tooltip>
-      </Box>
+      </Flex>
       <Text pt="2" fontSize="sm">
         {desc}
       </Text>

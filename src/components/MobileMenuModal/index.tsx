@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Text, VStack, Flex } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MouseEvent, useEffect } from 'react';
@@ -53,7 +53,7 @@ function MobileMenuModal({ visible, onClose }: MobileMenuModalProps) {
 function Profile() {
   return (
     <Link to="/profile">
-      <Box p={4} display="flex" alignItems="center" columnGap={4}>
+      <Flex p={4} alignItems="center" columnGap={4}>
         <Avatar
           src="https://bit.ly/broken-link"
           size="sm"
@@ -64,7 +64,7 @@ function Profile() {
           }}
         />
         <Text>Hello there!</Text>
-      </Box>
+      </Flex>
     </Link>
   );
 }

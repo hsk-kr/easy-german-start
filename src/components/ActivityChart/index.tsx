@@ -1,4 +1,4 @@
-import { Box, Select, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, Select, Text, Tooltip } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { ReactNode, useMemo } from 'react';
 
@@ -19,20 +19,20 @@ function ActivityChart() {
 
 const ChartHeader = () => {
   return (
-    <Box
-      display="flex"
+    <Flex
       justifyContent="space-between"
       alignItems="center"
       columnGap={40}
       overflowX="auto"
+      textTransform="uppercase"
     >
-      <Box display="flex" alignItems="center" whiteSpace="nowrap">
+      <Flex alignItems="center" whiteSpace="nowrap">
         <Text fontSize="large" fontWeight="bold" mr={1}>
           100
         </Text>
         <Text>quizzes solved in the past year</Text>
-      </Box>
-      <Box display="flex" alignItems="center" columnGap={2} whiteSpace="nowrap">
+      </Flex>
+      <Flex alignItems="center" columnGap={2} whiteSpace="nowrap">
         <Text>
           Total activity days: <b>180</b>
         </Text>
@@ -49,8 +49,8 @@ const ChartHeader = () => {
           <option value="past year">past year</option>
           <option value="2023">2023</option>
         </Select>
-      </Box>
-    </Box>
+      </Flex>
+    </Flex>
   );
 };
 
@@ -98,9 +98,8 @@ const ChartBody = () => {
             <Text fontWeight="bold" fontSize="small" mb={1}>
               {prevCur.format('MMM')}
             </Text>
-            <Box
+            <Flex
               key={prevCur.toString()}
-              display="flex"
               flexDir="column"
               flexWrap="wrap"
               gap={`${gap}px`}
@@ -108,7 +107,7 @@ const ChartBody = () => {
               h={`${height}px`}
             >
               {activities}
-            </Box>
+            </Flex>
           </Box>
         );
 
@@ -120,9 +119,9 @@ const ChartBody = () => {
   }, []);
 
   return (
-    <Box display="flex" columnGap={6} p={4} overflowX="auto">
+    <Flex columnGap={6} p={4} overflowX="auto">
       {activities}
-    </Box>
+    </Flex>
   );
 };
 
