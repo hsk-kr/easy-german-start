@@ -5,11 +5,13 @@ import {
   Text,
   IconButton,
   useDisclosure,
+  Flex,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import DesktopNavbar from '../DesktopNavbar';
 import MobileMenuModal from '../MobileMenuModal';
+import StreakBadge from '../StreakBadge';
 
 function Header() {
   const mobileMenuModal = useDisclosure();
@@ -53,21 +55,26 @@ function Header() {
             </Link>
             <DesktopNavbar />
           </Box>
-          <Link to="/profile">
-            <Avatar
-              display={{
-                base: 'none',
-                md: 'flex',
-              }}
-              src="https://bit.ly/broken-link"
-              size="sm"
-              cursor="pointer"
-              transition="all 0.2s"
-              _hover={{
-                opacity: 0.8,
-              }}
-            />
-          </Link>
+          <Flex
+            columnGap={2}
+            display={{
+              base: 'none',
+              md: 'flex',
+            }}
+          >
+            <StreakBadge number={10} />
+            <Link to="/profile">
+              <Avatar
+                src="https://bit.ly/broken-link"
+                size="sm"
+                cursor="pointer"
+                transition="all 0.2s"
+                _hover={{
+                  opacity: 0.8,
+                }}
+              />
+            </Link>
+          </Flex>
           <IconButton
             display={{
               base: 'flex',

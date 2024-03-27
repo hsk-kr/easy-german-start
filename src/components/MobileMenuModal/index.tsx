@@ -2,6 +2,7 @@ import { Avatar, Box, Divider, Text, VStack, Flex } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MouseEvent, useEffect } from 'react';
+import StreakBadge from '../StreakBadge';
 
 interface MobileMenuModalProps {
   visible?: boolean;
@@ -52,20 +53,22 @@ function MobileMenuModal({ visible, onClose }: MobileMenuModalProps) {
 
 function Profile() {
   return (
-    <Link to="/profile">
-      <Flex p={4} alignItems="center" columnGap={4}>
-        <Avatar
-          src="https://bit.ly/broken-link"
-          size="sm"
-          cursor="pointer"
-          transition="all 0.2s"
-          _hover={{
-            opacity: 0.8,
-          }}
-        />
-        <Text>Hello there!</Text>
-      </Flex>
-    </Link>
+    <Flex p={4} alignItems="center" columnGap={4}>
+      <Link to="/profile">
+        <Flex columnGap={2}>
+          <Avatar
+            src="https://bit.ly/broken-link"
+            size="sm"
+            cursor="pointer"
+            transition="all 0.2s"
+            _hover={{
+              opacity: 0.8,
+            }}
+          />
+          <StreakBadge number={10} />
+        </Flex>
+      </Link>
+    </Flex>
   );
 }
 

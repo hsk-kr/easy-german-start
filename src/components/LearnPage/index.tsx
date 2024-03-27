@@ -2,7 +2,7 @@ import { Container, VStack } from '@chakra-ui/react';
 import DefaultTemplate from '../DefaultTemplate';
 import QuizSection from '../QuizSection';
 
-export function QuizListPage() {
+export function LearnPage() {
   const commonWords = [];
 
   for (let i = 0; i < 10; i++) {
@@ -33,4 +33,4 @@ export function QuizListPage() {
   );
 }
 
-export default QuizListPage;
+export default LearnPage;

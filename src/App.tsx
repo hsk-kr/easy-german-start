@@ -1,7 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import QuizListPage from './components/QuizListPage/QuizListPage';
+import LearnPage from './components/LearnPage';
 import ProfilePage from './components/ProfilePage';
 import './dayjs';
 
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/learn',
-    element: <QuizListPage />,
+    element: <LearnPage />,
   },
   {
     path: 'profile',
