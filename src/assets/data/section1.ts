@@ -1842,28 +1842,28 @@ const lesson7: Lesson = {
       ],
     },
     {
-      word: 'hier',
-      desc: "Adverb meaning 'here', indicating a location or position.",
+      word: 'Lande',
+      desc: "Noun meaning 'land', the solid ground of the earth; dry land.",
       examples: [
         {
-          sentence: 'Ich bin hier.',
-          translation: 'I am here.',
+          sentence: 'Das Flugzeug landete sicher auf dem Lande.',
+          translation: 'The airplane landed safely on the land.',
         },
         {
-          sentence: 'Das Buch liegt hier.',
-          translation: 'The book is here.',
+          sentence: 'Die Schiffe näherten sich dem Lande.',
+          translation: 'The ships approached the land.',
         },
         {
-          sentence: 'Komm her und setz dich hier hin.',
-          translation: 'Come here and sit down here.',
+          sentence: 'Sie kamen vom Lande und suchten nach einer Unterkunft.',
+          translation: 'They came from the land and looked for accommodation.',
         },
         {
-          sentence: 'Wir treffen uns hier.',
-          translation: 'We are meeting here.',
+          sentence: 'Das Dorf liegt weit entfernt vom nächsten Lande.',
+          translation: 'The village is far from the nearest land.',
         },
         {
-          sentence: 'Hier ist dein Kaffee.',
-          translation: 'Here is your coffee.',
+          sentence: 'Der Lande war fruchtbar und gut bewässert.',
+          translation: 'The land was fertile and well-watered.',
         },
       ],
     },

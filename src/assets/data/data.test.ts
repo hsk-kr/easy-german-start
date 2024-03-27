@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { mostCommon1000Words } from './index';
 
 describe('Validate mostCommon1000Words', () => {
-  it('should has two sections.', () => {
-    expect(mostCommon1000Words).length(2);
+  it('should has 4 sections.', () => {
+    expect(mostCommon1000Words).length(4);
   });
 
   const getSections = function* () {
@@ -60,6 +60,18 @@ describe('Validate mostCommon1000Words', () => {
         expect(lesson).toHaveProperty('lessonTitle');
         expect(lesson).toHaveProperty('lessonDesc');
         expect(lesson).toHaveProperty('words');
+      }
+    });
+
+    it('should have words in the same order with the order described in lessondesc', () => {
+      for (const lesson of getLessons()) {
+        const words = lesson.lessonDesc.split(',').map((e) => e.trim());
+
+        expect(words.length).equals(lesson.words.length);
+
+        for (let i = 0; i < lesson.words.length; i++) {
+          expect(words[i]).equals(lesson.words[i].word);
+        }
       }
     });
 
