@@ -94,7 +94,6 @@ describe('Validate mostCommon1000Words', () => {
 
     it('should have 5 examples.', () => {
       for (const word of getWords()) {
-        console.log(word);
         expect(word.examples).length(5);
       }
     });
