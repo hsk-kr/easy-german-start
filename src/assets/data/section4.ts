@@ -2803,7 +2803,7 @@ const lesson10: Lesson = {
   ],
 };
 
-const section2: Section = {
+const section4: Section = {
   sectionName: 'Common 100 German Words',
   lessons: [
     lesson1,
@@ -2819,4 +2819,4 @@ const section2: Section = {
   ],
 };
 
-export default section2;
+export default section4;

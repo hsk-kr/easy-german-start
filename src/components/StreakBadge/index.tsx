@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, Tooltip } from '@chakra-ui/react';
 import { BsFire } from 'react-icons/bs';
 
 interface StreakBadgeProps {
@@ -7,12 +7,14 @@ interface StreakBadgeProps {
 
 const StreakBadge = ({ number }: StreakBadgeProps) => {
   return (
-    <Flex>
-      <BsFire />
-      <Text fontSize="small" fontWeight="bold">
-        {number}
-      </Text>
-    </Flex>
+    <Tooltip label="UTC based">
+      <Flex>
+        <BsFire />
+        <Text fontSize="small" fontWeight="bold">
+          {number}
+        </Text>
+      </Flex>
+    </Tooltip>
   );
 };
 
