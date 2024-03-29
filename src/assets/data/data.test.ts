@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { mostCommon1000Words } from './index';
 
 describe('Validate mostCommon1000Words', () => {
-  it('should has 4 sections.', () => {
-    expect(mostCommon1000Words).length(4);
+  it('should has 10 sections.', () => {
+    expect(mostCommon1000Words).length(10);
   });
 
   const getSections = function* () {
@@ -77,6 +77,9 @@ describe('Validate mostCommon1000Words', () => {
 
     it('should have 10 words.', () => {
       for (const lesson of getLessons()) {
+        if (lesson.words.length !== 10) {
+          console.log(lesson);
+        }
         expect(lesson.words).length(10);
       }
     });

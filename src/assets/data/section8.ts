@@ -1218,6 +1218,307 @@ const lesson4: Lesson = {
 const lesson5: Lesson = {
   lessonTitle: '10 Common Words',
   lessonDesc:
+    'Finger, Industrie, Wert, Kampf, Lüge, schlagen, begeistern, natürlich, Blick, Sinn',
+  words: [
+    {
+      word: 'Finger',
+      desc: 'One of the five digits on the hand, especially one other than the thumb.',
+      examples: [
+        {
+          sentence:
+            'Sie zeigte auf den Bildschirm und berührte ihn mit ihrem Finger.',
+          translation:
+            'She pointed at the screen and touched it with her finger.',
+        },
+        {
+          sentence: 'Er verletzte seinen Finger, als er die Tür zuschlug.',
+          translation: 'He injured his finger when he slammed the door.',
+        },
+        {
+          sentence: 'Sie zählte die Finger an ihrer Hand.',
+          translation: 'She counted the fingers on her hand.',
+        },
+        {
+          sentence: 'Der Ring passte perfekt um ihren Finger.',
+          translation: 'The ring fit perfectly around her finger.',
+        },
+        {
+          sentence:
+            'Der Künstler malte mit seinen Fingern statt mit einem Pinsel.',
+          translation:
+            'The artist painted with his fingers instead of a brush.',
+        },
+      ],
+    },
+    {
+      word: 'Industrie',
+      desc: 'The production of goods or related services within an economy.',
+      examples: [
+        {
+          sentence:
+            'Die Automobilindustrie ist ein wichtiger Wirtschaftszweig.',
+          translation:
+            'The automotive industry is an important sector of the economy.',
+        },
+        {
+          sentence:
+            'Die Textilindustrie hat sich im Laufe der Jahre stark verändert.',
+          translation:
+            'The textile industry has undergone significant changes over the years.',
+        },
+        {
+          sentence: 'Die Filmindustrie von Hollywood ist weltweit bekannt.',
+          translation: 'The Hollywood film industry is globally recognized.',
+        },
+        {
+          sentence: 'Die Pharmaindustrie entwickelt ständig neue Medikamente.',
+          translation:
+            'The pharmaceutical industry is constantly developing new drugs.',
+        },
+        {
+          sentence:
+            'Die Industrie spielt eine Schlüsselrolle in der Wirtschaft eines Landes.',
+          translation: "The industry plays a key role in a country's economy.",
+        },
+      ],
+    },
+    {
+      word: 'Wert',
+      desc: 'The importance, worth, or usefulness of something.',
+      examples: [
+        {
+          sentence: 'Die Kunst hat einen hohen kulturellen Wert.',
+          translation: 'Art has a high cultural value.',
+        },
+        {
+          sentence: 'Der Wert einer Sache liegt oft im Auge des Betrachters.',
+          translation:
+            'The value of something is often in the eye of the beholder.',
+        },
+        {
+          sentence:
+            'Die Antiquität hat einen sentimentalen Wert für die Familie.',
+          translation: 'The antique has sentimental value for the family.',
+        },
+        {
+          sentence:
+            'Er schätzte den Wert der Immobilie auf mehrere Millionen Dollar.',
+          translation:
+            'He estimated the value of the property at several million dollars.',
+        },
+        {
+          sentence: 'Die Freundschaft hat einen unschätzbaren Wert.',
+          translation: 'Friendship has an invaluable value.',
+        },
+      ],
+    },
+    {
+      word: 'Kampf',
+      desc: 'A physical or verbal confrontation intended to establish dominance or resolve a disagreement.',
+      examples: [
+        {
+          sentence:
+            'Der Kampf zwischen den beiden rivalisierenden Gruppen eskalierte schnell.',
+          translation:
+            'The fight between the two rival groups escalated quickly.',
+        },
+        {
+          sentence:
+            'Sie führten einen erbitterten Kampf um die Vorherrschaft in der Branche.',
+          translation:
+            'They waged a fierce battle for dominance in the industry.',
+        },
+        {
+          sentence: 'Der politische Kampf um die Macht dauerte Monate.',
+          translation: 'The political struggle for power lasted for months.',
+        },
+        {
+          sentence:
+            'Der innere Kampf mit seinen Dämonen war schwer zu überwinden.',
+          translation:
+            'The inner struggle with his demons was difficult to overcome.',
+        },
+        {
+          sentence: 'Der Kampf für Gerechtigkeit ist nie umsonst.',
+          translation: 'The fight for justice is never in vain.',
+        },
+      ],
+    },
+    {
+      word: 'Lüge',
+      desc: 'A false statement made with intent to deceive.',
+      examples: [
+        {
+          sentence: 'Er konnte die Lüge in ihren Augen erkennen.',
+          translation: 'He could see the lie in her eyes.',
+        },
+        {
+          sentence: 'Eine kleine Lüge kann große Auswirkungen haben.',
+          translation: 'A little lie can have big consequences.',
+        },
+        {
+          sentence: 'Die Lüge wurde bald entlarvt.',
+          translation: 'The lie was soon exposed.',
+        },
+        {
+          sentence: 'Er bedauerte zutiefst, die Lüge erzählt zu haben.',
+          translation: 'He deeply regretted telling the lie.',
+        },
+        {
+          sentence:
+            'Die Wahrheit kommt immer ans Licht, selbst nach einer Lüge.',
+          translation: 'The truth always comes out, even after a lie.',
+        },
+      ],
+    },
+    {
+      word: 'schlagen',
+      desc: 'To hit with force, typically with a hand or tool.',
+      examples: [
+        {
+          sentence: 'Er schlug die Tür aus Versehen zu fest zu.',
+          translation: 'He accidentally slammed the door too hard.',
+        },
+        {
+          sentence: 'Sie schlug ihm sanft auf den Rücken, um ihn zu trösten.',
+          translation: 'She gently patted his back to comfort him.',
+        },
+        {
+          sentence: 'Der Sturm schlug die Wellen gegen das Ufer.',
+          translation: 'The storm beat the waves against the shore.',
+        },
+        {
+          sentence: 'Er schlug den Ball hart über das Netz.',
+          translation: 'He hit the ball hard over the net.',
+        },
+        {
+          sentence: 'Der Schlag des Uhrzeigers markierte die volle Stunde.',
+          translation: 'The stroke of the clock marked the full hour.',
+        },
+      ],
+    },
+    {
+      word: 'begeistern',
+      desc: 'To fill someone with great excitement or enthusiasm.',
+      examples: [
+        {
+          sentence: 'Seine Rede begeisterte die Zuhörer.',
+          translation: 'His speech excited the audience.',
+        },
+        {
+          sentence: 'Das Konzert hat das Publikum wirklich begeistert.',
+          translation: 'The concert really thrilled the audience.',
+        },
+        {
+          sentence: 'Die Idee, ins Ausland zu reisen, begeisterte sie sehr.',
+          translation: 'The idea of traveling abroad excited her greatly.',
+        },
+        {
+          sentence:
+            'Die Neuigkeiten begeisterten sie so sehr, dass sie vor Freude weinte.',
+          translation: 'The news excited her so much that she cried with joy.',
+        },
+        {
+          sentence:
+            'Sein Enthusiasmus für das Thema begeisterte auch die anderen.',
+          translation: 'His enthusiasm for the subject excited the others too.',
+        },
+      ],
+    },
+    {
+      word: 'natürlich',
+      desc: 'Existing in or caused by nature; not made or caused by humankind.',
+      examples: [
+        {
+          sentence: 'Der Wald ist ein natürlicher Lebensraum für viele Tiere.',
+          translation: 'The forest is a natural habitat for many animals.',
+        },
+        {
+          sentence:
+            'Es ist natürlich, sich in der Nähe von Wasser wohl zu fühlen.',
+          translation: "It's natural to feel comfortable near water.",
+        },
+        {
+          sentence: 'Die Blumen blühen natürlich im Frühling.',
+          translation: 'The flowers naturally bloom in spring.',
+        },
+        {
+          sentence:
+            'Kinder haben einen natürlichen Drang, die Welt zu erkunden.',
+          translation: 'Children have a natural urge to explore the world.',
+        },
+        {
+          sentence: 'Es ist ganz natürlich, sich manchmal traurig zu fühlen.',
+          translation: "It's perfectly natural to feel sad sometimes.",
+        },
+      ],
+    },
+    {
+      word: 'Blick',
+      desc: 'A facial expression showing emotion or attitude.',
+      examples: [
+        {
+          sentence: 'Sein Blick verriet seine Verwirrung.',
+          translation: 'His expression betrayed his confusion.',
+        },
+        {
+          sentence: 'Ihr Blick zeigte deutlich ihre Begeisterung.',
+          translation: 'Her expression clearly showed her excitement.',
+        },
+        {
+          sentence: 'Ein trauriger Blick lag in ihren Augen.',
+          translation: 'A sad expression lay in her eyes.',
+        },
+        {
+          sentence: 'Sein Blick veränderte sich, als er die Nachricht hörte.',
+          translation: 'His expression changed when he heard the news.',
+        },
+        {
+          sentence:
+            'Der Blick auf ihr Gesicht verriet, dass sie gelogen hatte.',
+          translation: 'The look on her face revealed that she had lied.',
+        },
+      ],
+    },
+    {
+      word: 'Sinn',
+      desc: 'The faculty of perception or apprehension through the senses or intellect.',
+      examples: [
+        {
+          sentence:
+            'Der Geruchssinn ermöglicht es uns, verschiedene Düfte wahrzunehmen.',
+          translation:
+            'The sense of smell allows us to perceive different scents.',
+        },
+        {
+          sentence:
+            'Der Sinn für Humor ist wichtig, um das Leben leichter zu nehmen.',
+          translation:
+            'A sense of humor is important to take life less seriously.',
+        },
+        {
+          sentence:
+            'Das Gehör spielt eine entscheidende Rolle in unserem Sinn für Musik.',
+          translation: 'Hearing plays a crucial role in our sense of music.',
+        },
+        {
+          sentence:
+            'Der sechste Sinn bezieht sich oft auf intuitive oder paranormale Fähigkeiten.',
+          translation:
+            'The sixth sense often refers to intuitive or paranormal abilities.',
+        },
+        {
+          sentence: 'Die Sinne helfen uns, die Welt um uns herum zu verstehen.',
+          translation: 'The senses help us understand the world around us.',
+        },
+      ],
+    },
+  ],
+};
+
+const lesson6: Lesson = {
+  lessonTitle: '10 Common Words',
+  lessonDesc:
     'Hauptstadt, wird nicht, Stuhl, Achtung, Obst, reich, dick, Soldat, Prozess, betreiben',
   words: [
     {
@@ -1506,7 +1807,7 @@ const lesson5: Lesson = {
   ],
 };
 
-const lesson6: Lesson = {
+const lesson7: Lesson = {
   lessonTitle: '10 Common Words',
   lessonDesc:
     'Praxis, trennen, schwierig, Arzt, Bitte, schützen, Mittag, Ernte, modernen, Elementes',
@@ -1791,7 +2092,7 @@ const lesson6: Lesson = {
   ],
 };
 
-const lesson7: Lesson = {
+const lesson8: Lesson = {
   lessonTitle: '10 Common Words',
   lessonDesc:
     'treffen, Schüler, Ecke, Partei, Versorgung, deren, lokalisieren, Rings, Charakter, insekt',
@@ -2091,128 +2392,116 @@ const lesson7: Lesson = {
   ],
 };
 
-const lesson8: Lesson = {
+const lesson9: Lesson = {
   lessonTitle: '10 Common Words',
   lessonDesc:
     'gefangen, Zeit, zeigen, Funk, Speiche, Atom, Mensch, Geschichte, Wirkung, elektrisch',
   words: [
     {
       word: 'gefangen',
-      desc: 'Caught or confined.',
+      desc: 'Caught or captured by someone or something.',
       examples: [
         {
-          sentence: 'Der Dieb wurde von der Polizei gefangen genommen.',
-          translation: 'The thief was caught by the police.',
+          sentence: 'Die Maus wurde von der Katze gefangen.',
+          translation: 'The mouse was caught by the cat.',
+        },
+        {
+          sentence: 'Der Einbrecher wurde von der Polizei gefangen genommen.',
+          translation: 'The burglar was caught by the police.',
         },
         {
           sentence: 'Er war gefangen in einem Netz aus Lügen.',
           translation: 'He was caught in a web of lies.',
         },
         {
-          sentence: 'Die Vögel waren in einem Käfig gefangen.',
-          translation: 'The birds were trapped in a cage.',
+          sentence: 'Das Flugzeug wurde von der Radarstation gefangen.',
+          translation: 'The airplane was caught by the radar station.',
         },
         {
-          sentence: 'Sie fühlte sich gefangen in ihrer eigenen Gedankenwelt.',
-          translation: 'She felt trapped in her own thoughts.',
-        },
-        {
-          sentence: 'Der Fisch wurde mit einem Netz gefangen.',
-          translation: 'The fish was caught with a net.',
+          sentence: 'Der Dieb wurde auf frischer Tat gefangen.',
+          translation: 'The thief was caught in the act.',
         },
       ],
     },
     {
       word: 'Zeit',
-      desc: 'A period or interval during which an action or process exists or continues.',
+      desc: 'A period or interval in which events occur sequentially or the duration of such a period.',
       examples: [
         {
           sentence: 'Die Zeit vergeht schnell, wenn man Spaß hat.',
           translation: "Time flies when you're having fun.",
         },
         {
-          sentence: 'Er verbrachte viel Zeit mit seiner Familie.',
-          translation: 'He spent a lot of time with his family.',
+          sentence: 'Es ist Zeit, nach Hause zu gehen.',
+          translation: "It's time to go home.",
         },
         {
-          sentence: 'Wir leben in einer Zeit des technologischen Fortschritts.',
-          translation: 'We live in a time of technological advancement.',
+          sentence: 'Die Zeit heilt alle Wunden.',
+          translation: 'Time heals all wounds.',
         },
         {
-          sentence:
-            'Die Zeit heilt nicht alle Wunden, aber sie lindert den Schmerz.',
-          translation: "Time doesn't heal all wounds, but it eases the pain.",
+          sentence: 'Es ist Zeit für Veränderungen.',
+          translation: "It's time for changes.",
         },
         {
-          sentence: 'Die Zeit für Veränderungen ist gekommen.',
-          translation: 'The time for change has come.',
+          sentence: 'Die Zeit steht niemals still.',
+          translation: 'Time never stands still.',
         },
       ],
     },
     {
       word: 'zeigen',
-      desc: 'To make (something) visible or noticeable.',
+      desc: 'To indicate or point out something; to reveal or display.',
       examples: [
         {
-          sentence: 'Er zeigte mir den Weg zum Bahnhof.',
-          translation: 'He showed me the way to the train station.',
+          sentence: 'Kannst du mir den Weg zum Bahnhof zeigen?',
+          translation: 'Can you show me the way to the train station?',
         },
         {
-          sentence: 'Die Studie zeigt, dass Rauchen gesundheitsschädlich ist.',
-          translation: 'The study indicates that smoking is harmful to health.',
+          sentence: 'Der Zeiger auf der Karte zeigt Norden an.',
+          translation: 'The pointer on the map indicates north.',
         },
         {
-          sentence: 'Kannst du mir bitte zeigen, wie man das macht?',
-          translation: 'Can you please show me how to do that?',
+          sentence:
+            'Er zeigte auf den Bildschirm, um sein Argument zu unterstützen.',
+          translation: 'He pointed at the screen to support his argument.',
         },
         {
-          sentence: 'Der Film zeigt die Schönheit der Natur.',
-          translation: 'The movie shows the beauty of nature.',
+          sentence: 'Die Anzeige zeigt die Temperatur in Celsius an.',
+          translation: 'The display indicates the temperature in Celsius.',
         },
         {
-          sentence: 'Seine Reaktion zeigte, dass er überrascht war.',
-          translation: 'His reaction indicated that he was surprised.',
+          sentence: 'Die Grafik zeigt den Anstieg der Verkaufszahlen.',
+          translation: 'The graph shows the increase in sales figures.',
         },
       ],
     },
     {
       word: 'Funk',
-      desc: 'Radio broadcasting, especially as a hobby or by amateurs.',
+      desc: 'A method of transmitting and receiving electromagnetic waves, especially those carrying sound messages, typically through radio stations.',
       examples: [
         {
-          sentence: 'Er hört gerne alte Funkmusik aus den 70er Jahren.',
-          translation: 'He enjoys listening to old radio music from the 70s.',
+          sentence: 'Das Auto hat ein eingebautes Funkgerät.',
+          translation: 'The car has a built-in radio.',
         },
         {
-          sentence: 'Der Funkempfänger kann verschiedene Sender empfangen.',
-          translation: 'The radio receiver can pick up various stations.',
+          sentence: 'Der Moderator sprach über das Funkgerät.',
+          translation: 'The announcer spoke over the radio.',
         },
         {
-          sentence:
-            'Sie arbeitet als Moderatorin bei einem lokalen Funkprogramm.',
-          translation: 'She works as a host on a local radio program.',
+          sentence: 'Sie hörte gerne Musik im Funk.',
+          translation: 'She enjoyed listening to music on the radio.',
         },
         {
-          sentence:
-            'Funkgeräte sind wichtig für die Kommunikation in abgelegenen Gebieten.',
-          translation:
-            'Radios are important for communication in remote areas.',
+          sentence: 'Das Funkgerät empfing ein Signal.',
+          translation: 'The radio received a signal.',
         },
         {
-          sentence:
-            'In den 1920er Jahren begann die Ära des kommerziellen Rundfunks.',
-          translation:
-            'The era of commercial radio broadcasting began in the 1920s.',
+          sentence: 'Die Nachricht wurde über den Funk verbreitet.',
+          translation: 'The message was broadcast over the radio.',
         },
       ],
     },
-  ],
-};
-
-const lesson9: Lesson = {
-  lessonTitle: '10 Common Words',
-  lessonDesc: 'Speiche, Atom, Mensch, Geschichte, Wirkung, elektrisch',
-  words: [
     {
       word: 'Speiche',
       desc: 'One of the rods or braces connecting the hub and rim of a wheel.',

@@ -1704,10 +1704,6 @@ const lesson6: Lesson = {
           sentence: 'Sie erreichten die Mitte des Berges vor Sonnenuntergang.',
           translation: 'They reached the middle of the mountain before sunset.',
         },
-        {
-          sentence: 'Die Mitte des Buches war besonders spannend.',
-          translation: 'The middle of the book was particularly exciting.',
-        },
       ],
     },
     {
