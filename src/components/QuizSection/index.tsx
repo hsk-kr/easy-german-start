@@ -65,7 +65,7 @@ function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
   };
 
   return (
-    <Box boxShadow="base" p={4}>
+    <Flex boxShadow="base" flexDir="column" p={4}>
       <Flex columnGap={2} alignItems="center">
         <Heading size="xs" textTransform="uppercase">
           {title}
@@ -74,15 +74,15 @@ function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
           <CheckCircleIcon color={status.color} />
         </Tooltip>
       </Flex>
-      <Text pt="2" fontSize="sm">
+      <Text pt="2" fontSize="sm" flexGrow={1}>
         {desc}
       </Text>
-      <Box mt={2}>
+      <Box mt={2} justifySelf="flex-end">
         <Button colorScheme={button.color} size="sm">
           {button.label}
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

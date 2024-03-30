@@ -72,9 +72,8 @@ const ChartBody = () => {
       )}`;
 
       activities.push(
-        <Tooltip label={label}>
+        <Tooltip label={label} key={cur.toString()}>
           <Box
-            key={cur.toString()}
             bgColor={blockColor}
             w={`${blockSize}px`}
             h={`${blockSize}px`}
