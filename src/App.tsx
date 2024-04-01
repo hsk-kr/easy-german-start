@@ -1,9 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import LearnPage from './components/LearnPage';
-import ProfilePage from './components/ProfilePage';
+import HomePage from './pages/HomePage';
+import LearnPage from './pages/LearnPage';
+import ProfilePage from './pages/ProfilePage';
 import './dayjs';
+import GamePage from './pages/GamePage';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: 'profile',
     element: <ProfilePage />,
+  },
+  {
+    path: 'game',
+    element: <GamePage />,
   },
 ]);
 

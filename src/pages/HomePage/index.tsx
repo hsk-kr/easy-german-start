@@ -1,4 +1,4 @@
-import DefaultTemplate from '../DefaultTemplate';
+import DefaultTemplate from '../../components/DefaultTemplate';
 
 function HomePage() {
   return <DefaultTemplate disablePadding>HOME</DefaultTemplate>;

@@ -1,12 +1,14 @@
 import { Container, VStack } from '@chakra-ui/react';
-import DefaultTemplate from '../DefaultTemplate';
-import QuizSection from '../QuizSection';
+import DefaultTemplate from '../../components/DefaultTemplate';
+import QuizSection from '../../components/QuizSection';
 import { useMemo } from 'react';
 import useLessons from '../../hooks/useLessons';
+import { useNavigate } from 'react-router-dom';
 
 export function LearnPage() {
   const { sections } = useLessons();
   const commonWords = [];
+  const navigate = useNavigate();
 
   for (let i = 0; i < 10; i++) {
     commonWords.push({
@@ -21,10 +23,13 @@ export function LearnPage() {
       <QuizSection
         key={sectionIdx}
         title={`${sectionIdx + 1}. ${section.sectionName}`}
-        items={section.lessons.map((lesson) => ({
+        items={section.lessons.map((lesson, lessonIdx) => ({
           title: lesson.lessonTitle,
           desc: lesson.lessonDesc,
           done: Math.floor(Math.random() * 2) === 0, //dummy
+          onNav: () => {
+            navigate(`/game?section=${sectionIdx}&lesson=${lessonIdx}`);
+          },
         }))}
       />
     ));

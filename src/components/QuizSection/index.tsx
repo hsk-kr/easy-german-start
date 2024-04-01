@@ -22,6 +22,7 @@ interface QuizSectionItemProps {
   title?: string;
   desc?: string;
   done?: boolean;
+  onNav?: VoidFunction;
 }
 
 function QuizSection({ title, items }: QuizSectionProps) {
@@ -54,7 +55,12 @@ function QuizSection({ title, items }: QuizSectionProps) {
   );
 }
 
-function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
+function QuizSectionItem({
+  title,
+  desc,
+  done = false,
+  onNav,
+}: QuizSectionItemProps) {
   const status = {
     color: done ? 'green' : 'gray',
     tooltip: done ? 'Completed' : 'Not Started',
@@ -78,7 +84,7 @@ function QuizSectionItem({ title, desc, done = false }: QuizSectionItemProps) {
         {desc}
       </Text>
       <Box mt={2} justifySelf="flex-end">
-        <Button colorScheme={button.color} size="sm">
+        <Button colorScheme={button.color} size="sm" onClick={onNav}>
           {button.label}
         </Button>
       </Box>

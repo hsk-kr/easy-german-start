@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
-import ActivityChart from '../ActivityChart';
-import DefaultTemplate from '../DefaultTemplate';
-import RecentActivities from '../RecentActivities';
+import ActivityChart from '../../components/ActivityChart';
+import DefaultTemplate from '../../components/DefaultTemplate';
+import RecentActivities from '../../components/RecentActivities';
 
 function ProfilePage() {
   return (
