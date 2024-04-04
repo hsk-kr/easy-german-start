@@ -1,7 +1,7 @@
-import { Box } from '@chakra-ui/react';
 import MatchGame from '../../components/MatchGame';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useLessons from '../../hooks/useLessons';
+import DefaultTemplate from '../../components/DefaultTemplate';
 
 type SearchParam = { section: number; lesson: number };
 
@@ -45,13 +45,12 @@ const GamePage = () => {
   const { section, lesson } = getParams();
   redirectHomeIfParamsIsInvalid({ section, lesson });
 
-  const lessons = getLesson(section, lesson);
-  console.log(lessons);
+  const currentLesson = getLesson(section, lesson);
 
   return (
-    <Box>
-      <MatchGame />
-    </Box>
+    <DefaultTemplate disablePadding={true}>
+      <MatchGame lesson={currentLesson} />
+    </DefaultTemplate>
   );
 };
 
