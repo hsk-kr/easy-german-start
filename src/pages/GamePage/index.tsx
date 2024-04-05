@@ -49,7 +49,8 @@ const GamePage = () => {
 
   return (
     <DefaultTemplate disablePadding={true}>
-      <MatchGame lesson={currentLesson} />
+      {/* It's working, when the game is done, the message is shown */}
+      <MatchGame lesson={currentLesson} onClear={() => alert('clear!')} />
     </DefaultTemplate>
   );
 };

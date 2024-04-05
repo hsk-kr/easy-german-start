@@ -3,8 +3,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LearnPage from './pages/LearnPage';
 import ProfilePage from './pages/ProfilePage';
-import './dayjs';
 import GamePage from './pages/GamePage';
+import './dayjs';
+import './anim.css';
 
 const router = createBrowserRouter([
   {

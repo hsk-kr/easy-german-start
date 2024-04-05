@@ -1,0 +1,16 @@
+@keyframes incorrect-answer {
+  from {
+    background-color: #e74c3c;
+    color: white;
+  }
+  to {
+    background-color: white;
+    color: black;
+  }
+}
+
+.anim-incorrect-answer {
+  animation-name: incorrect-answer;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+}
