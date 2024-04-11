@@ -1,9 +1,10 @@
 'use client';
 
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { Lesson } from '../../types/lesson';
-import { useEffect, useMemo, useState } from 'react';
 import useScreen from '../../hooks/useScreen';
+import useTTS from '../../hooks/useTTS';
 
 interface MatchGameProps {
   lesson: Lesson;
@@ -13,6 +14,11 @@ interface MatchGameProps {
 type Word = { word: string; desc: string };
 
 type CardStatus = 'selected' | 'correct' | 'incorrect' | 'none';
+
+const keyMapping = {
+  left: ['q', 'w', 'e', 'r', 't'],
+  right: ['a', 's', 'd', 'f', 'g'],
+};
 
 const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   const [words, setWords] = useState<Word[][]>([]);
@@ -105,6 +111,7 @@ const WordPairs = ({
     left: -1,
     right: -1,
   });
+  // When left and right doesn't match, the indices is stored here.
   const [prevIncorrectIndices, setPrevIncorrectIndices] = useState<{
     left: number;
     right: number;
@@ -112,6 +119,22 @@ const WordPairs = ({
     left: -1,
     right: -1,
   });
+  const { speak } = useTTS();
+
+  const resetPrevIncorrectIndicies = useCallback(() => {
+    setPrevIncorrectIndices({
+      left: -1,
+      right: -1,
+    });
+  }, []);
+
+  const resetSelectedIndicies = () => {
+    setSelectedIndices({
+      left: -1,
+      right: -1,
+    });
+  };
+
   const elements = useMemo(() => {
     const _elements = [];
 
@@ -151,39 +174,40 @@ const WordPairs = ({
           alignItems="center"
         >
           <Card
+            shortcut={keyMapping.left[i]}
             value={left[i].word}
             status={leftStatus}
             onSelect={handleSelect('left', i, left[i])}
+            onIncorrectAnimEnd={resetPrevIncorrectIndicies}
           />
           <Card
+            shortcut={keyMapping.right[i]}
             value={right[i].desc}
             status={rightStatus}
             onSelect={handleSelect('right', i, right[i])}
+            onIncorrectAnimEnd={resetPrevIncorrectIndicies}
           />
         </Flex>
       );
     }
 
     return _elements;
-  }, [correctWords, left, right, selectedIndices, prevIncorrectIndices]);
-
-  const resetPrevIncorrectIndicies = () => {
-    setPrevIncorrectIndices({
-      left: -1,
-      right: -1,
-    });
-  };
-
-  const resetSelectedIndicies = () => {
-    setSelectedIndices({
-      left: -1,
-      right: -1,
-    });
-  };
+  }, [
+    selectedIndices.left,
+    selectedIndices.right,
+    correctWords,
+    left,
+    prevIncorrectIndices.left,
+    prevIncorrectIndices.right,
+    right,
+    resetPrevIncorrectIndicies,
+  ]);
 
   useEffect(() => {
     if (selectedIndices.left === -1 || selectedIndices.right === -1) return;
 
+    // when both words on the left side and the right side,
+    // it decides it is correct or not.
     const isCorrect =
       left[selectedIndices.left].word === right[selectedIndices.right].word;
     if (isCorrect) {
@@ -192,6 +216,8 @@ const WordPairs = ({
         left[selectedIndices.left].word,
       ]);
     } else {
+      // this state will be used to decide if the status of a card is incorrect
+      // and when the status is incorrect, the care executes the incorrect animation.
       setPrevIncorrectIndices(selectedIndices);
     }
 
@@ -202,7 +228,17 @@ const WordPairs = ({
   useEffect(() => {
     setCorrectWords([]);
     resetPrevIncorrectIndicies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [left, right]);
+
+  useEffect(() => {
+    const word = left[selectedIndices.left];
+    if (!word) return;
+
+    speak(word.word);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndices.left]);
 
   useEffect(() => {
     if (correctWords.length !== left.length) return;
@@ -212,30 +248,37 @@ const WordPairs = ({
   }, [correctWords]);
 
   return (
-    <Flex flexDir="column" rowGap={4}>
-      {elements}
-    </Flex>
+    <>
+      <Shortcut />
+      <Flex flexDir="column" rowGap={[4, 4, 12]}>
+        {elements}
+      </Flex>
+    </>
   );
 };
 
 const Card = ({
+  shortcut,
   value,
   status,
   onSelect,
+  onIncorrectAnimEnd,
 }: {
+  shortcut: string;
   value: string;
   status: CardStatus;
   onSelect: VoidFunction;
+  onIncorrectAnimEnd: VoidFunction;
 }) => {
   const [incorrectAnim, setIncorrectAnim] = useState(false);
   const { isDesktop } = useScreen();
   const fontSize = value.length > 10 ? 'small' : 'large';
 
   const isHovable = isDesktop;
-  const bgColor = ['selected', 'correct'].includes(status)
-    ? 'blue.500'
-    : 'white';
-  const color = ['selected', 'correct'].includes(status) ? 'white' : 'black';
+  const active = ['selected', 'correct'].includes(status);
+  const bgColor = active ? 'blue.500' : 'white';
+  const color = active ? 'white' : 'black';
+  const p = active ? 2 : 4;
 
   useEffect(() => {
     // when the status is changed to `incorrect`, the animation will start once.
@@ -245,9 +288,14 @@ const Card = ({
 
   return (
     <Box
-      onAnimationEnd={() => setIncorrectAnim(false)}
+      id={getCardIdWithShortcut(shortcut)}
+      onAnimationEnd={() => {
+        setIncorrectAnim(false);
+        onIncorrectAnimEnd();
+      }}
+      position="relative"
       className={incorrectAnim ? 'anim-incorrect-answer' : ''}
-      p={4}
+      p={p}
       minWidth="120px"
       maxWidth="40%"
       bgColor={bgColor}
@@ -263,12 +311,33 @@ const Card = ({
               bgColor: 'blue.500',
               color: 'white',
               fontWeight: 'bold',
+              p: 2,
+              ['> .shortcut']: {
+                display: 'none',
+              },
             }
           : undefined
       }
       onClick={incorrectAnim ? undefined : onSelect}
     >
       {value}
+      <Box
+        className="shortcut"
+        position="absolute"
+        display={active || incorrectAnim ? 'none' : ['none', 'none', 'block']}
+        left="0%"
+        top="0"
+        transform="translate(0%,-50%)"
+        textTransform="capitalize"
+        px={2}
+        py={1}
+        borderRadius="md"
+        bg="gray.200"
+      >
+        <Text fontSize="sm" color="black" fontWeight="bold">
+          {shortcut}
+        </Text>
+      </Box>
     </Box>
   );
 };
@@ -307,6 +376,30 @@ const Guide = () => {
       </Text>
     </Flex>
   );
+};
+
+const Shortcut = () => {
+  useEffect(() => {
+    const keys = [...keyMapping.left, ...keyMapping.right];
+
+    const handleKeyEvent = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      if (!keys.includes(key)) return;
+
+      const elmt = document.getElementById(getCardIdWithShortcut(key));
+      if (elmt) elmt.click();
+    };
+
+    window.addEventListener('keyup', handleKeyEvent);
+
+    return () => window.removeEventListener('keyup', handleKeyEvent);
+  }, []);
+
+  return null;
+};
+
+const getCardIdWithShortcut = (shortcut: string) => {
+  return `card_${shortcut}`;
 };
 
 export default MatchGame;
