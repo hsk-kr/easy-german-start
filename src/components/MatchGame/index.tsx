@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
+import Guide from '../Guide';
 import { Lesson } from '../../types/lesson';
 import useScreen from '../../hooks/useScreen';
 import useTTS from '../../hooks/useTTS';
@@ -35,7 +36,7 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
 
       while (remainWords.length > 0) {
         const randomIdx = Math.floor(Math.random() * remainWords.length);
-        randomWords.push(remainWords.splice(randomIdx, 1)[0]);
+        randomWords.push({ ...remainWords.splice(randomIdx, 1)[0] });
       }
 
       return randomWords;
@@ -82,7 +83,7 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
 
   return (
     <Box bgColor="green.500" minH="100svh">
-      <Guide />
+      <Guide message="Match the word with the correct description!" />
       <Container maxW="container.md" pt={[4, 12]} p={4}>
         <WordPairs
           left={currentRoundWordPairs.left}
@@ -339,42 +340,6 @@ const Card = ({
         </Text>
       </Box>
     </Box>
-  );
-};
-
-const Guide = () => {
-  const [visible, setVisible] = useState(true);
-
-  if (!visible) return null;
-
-  return (
-    <Flex
-      w="100vw"
-      h="100vh"
-      bg="rgba(0, 0, 0, 0.6)"
-      position="fixed"
-      top={0}
-      bottom={0}
-      left={0}
-      right={0}
-      zIndex={20}
-      justifyContent="center"
-      alignItems="center"
-      color="white"
-      textTransform="uppercase"
-      fontWeight="bold"
-      textAlign="center"
-      flexDir="column"
-      cursor="pointer"
-      onClick={() => setVisible(false)}
-    >
-      <Text fontSize="xx-large">
-        Match the word with the correct description!
-      </Text>
-      <Text fontSize="x-large" mt={2}>
-        Click to start!
-      </Text>
-    </Flex>
   );
 };
 

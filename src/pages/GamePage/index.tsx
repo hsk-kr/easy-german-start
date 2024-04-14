@@ -1,7 +1,8 @@
-import MatchGame from '../../components/MatchGame';
+// import MatchGame from '../../components/MatchGame';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useLessons from '../../hooks/useLessons';
 import DefaultTemplate from '../../components/DefaultTemplate';
+import BlankFillGame from '../../components/BlankFillGame';
 
 type SearchParam = { section: number; lesson: number };
 
@@ -50,7 +51,8 @@ const GamePage = () => {
   return (
     <DefaultTemplate disablePadding={true}>
       {/* It's working, when the game is done, the message is shown */}
-      <MatchGame lesson={currentLesson} onClear={() => alert('clear!')} />
+      {/* <MatchGame lesson={currentLesson} onClear={() => alert('clear!')} /> */}
+      <BlankFillGame lesson={currentLesson} onClear={() => alert('clear!')} />
     </DefaultTemplate>
   );
 };
