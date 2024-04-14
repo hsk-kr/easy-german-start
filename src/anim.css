@@ -9,8 +9,42 @@
   }
 }
 
+@keyframes target-letter {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes incorrect-letter {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(8deg);
+  }
+}
+
 .anim-incorrect-answer {
   animation-name: incorrect-answer;
   animation-duration: 2s;
   animation-timing-function: linear;
+}
+
+.anim-target-letter {
+  animation-name: target-letter;
+  animation-duration: 0.25s;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.anim-incorrect-letter {
+  animation-name: incorrect-letter;
+  animation-duration: 0.25s;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: 2;
 }

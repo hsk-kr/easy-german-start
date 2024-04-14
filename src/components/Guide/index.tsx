@@ -2,7 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface GuideProps {
-  message: string;
+  message: string | string[];
 }
 
 const Guide = ({ message }: GuideProps) => {
@@ -30,9 +30,14 @@ const Guide = ({ message }: GuideProps) => {
       flexDir="column"
       cursor="pointer"
       onClick={() => setVisible(false)}
+      p={4}
     >
-      <Text fontSize="xx-large">{message}</Text>
-      <Text fontSize="x-large" mt={2}>
+      {typeof message === 'object' ? (
+        message.map((m) => <Text fontSize="x-large">{m}</Text>)
+      ) : (
+        <Text fontSize="x-large">{message}</Text>
+      )}
+      <Text fontSize="xx-large" mt={2}>
         Click to start!
       </Text>
     </Flex>
