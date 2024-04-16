@@ -11,6 +11,7 @@ const useTTS = () => {
       const utterance = new SpeechSynthesisUtterance(message);
       utterance.voice = voice;
 
+      speechSynthesis.cancel();
       speechSynthesis.speak(utterance);
     },
     [voice]

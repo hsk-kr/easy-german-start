@@ -1,12 +1,15 @@
-// import MatchGame from '../../components/MatchGame';
+import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useLessons from '../../hooks/useLessons';
 import DefaultTemplate from '../../components/DefaultTemplate';
+import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
 import BlankFillGame from '../../components/BlankFillGame';
+import MatchGame from '../../components/MatchGame';
 
 type SearchParam = { section: number; lesson: number };
 
 const GamePage = () => {
+  const [stage, setStage] = useState(0);
   const [searchParams] = useSearchParams();
   const { sections } = useLessons();
   const navigate = useNavigate();
@@ -48,13 +51,23 @@ const GamePage = () => {
 
   const currentLesson = getLesson(section, lesson);
 
-  return (
-    <DefaultTemplate disablePadding={true}>
-      {/* It's working, when the game is done, the message is shown */}
-      {/* <MatchGame lesson={currentLesson} onClear={() => alert('clear!')} /> */}
-      <BlankFillGame lesson={currentLesson} onClear={() => alert('clear!')} />
-    </DefaultTemplate>
-  );
+  const game = useMemo(() => {
+    const nextStage = () => setStage((prevStage) => prevStage + 1);
+    switch (stage) {
+      case 0:
+        return <MatchGame lesson={currentLesson} onClear={nextStage} />;
+      case 1:
+        return <BlankFillGame lesson={currentLesson} onClear={nextStage} />;
+      case 2:
+        return (
+          <TranslationPuzzleGame lesson={currentLesson} onClear={nextStage} />
+        );
+      default:
+        return null;
+    }
+  }, [currentLesson, stage]);
+
+  return <DefaultTemplate disablePadding={true}>{game}</DefaultTemplate>;
 };
 
 export default GamePage;

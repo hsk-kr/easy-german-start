@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Text, Flex } from '@chakra-ui/react';
+import { Box, Container, Text, Flex, Progress } from '@chakra-ui/react';
 import { Lesson } from '../../types/lesson';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import useScreen from '../../hooks/useScreen';
@@ -40,6 +40,8 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
     setCurrentWordIdx(randomWords.length > 0 ? 0 : -1);
   }, [lesson]);
 
+  const progress = Math.floor((currentWordIdx / words.length) * 100);
+
   return (
     <Box bgColor="green.500" minH="100svh">
       <Shortcut />
@@ -54,8 +56,11 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
         }
       />
       <Container maxW="container.md" pt={[4, 12]} p={4}>
-        <Description>{currentWord?.desc}</Description>
-        <Game word={currentWord?.word} onClear={handleGameOneStageClear} />
+        <Flex flexDir="column" gap={8}>
+          <Progress colorScheme="blue" value={progress} />
+          <Description>{currentWord?.desc}</Description>
+          <Game word={currentWord?.word} onClear={handleGameOneStageClear} />
+        </Flex>
       </Container>
     </Box>
   );
@@ -74,6 +79,35 @@ const Description = ({ children }: { children?: string }) => {
       {children}
     </Text>
   );
+};
+
+const Shortcut = () => {
+  useEffect(() => {
+    const handleKeyEvent = (e: KeyboardEvent) => {
+      let key = e.key;
+
+      if (e.ctrlKey) {
+        if (key === 'a') key = 'ä';
+        else if (key === 'A') key = 'Ä';
+        else if (key === 'o') key = 'ö';
+        else if (key === 'O') key = 'Ö';
+        else if (key === 'u') key = 'ü';
+        else if (key === 'U') key = 'Ü';
+        else if (key === 's' || key === 'S') key = 'ß';
+      }
+
+      const elmt = document.querySelector<HTMLParagraphElement>(
+        `.filling-letter.${key}`
+      );
+      if (elmt) elmt.click();
+    };
+
+    window.addEventListener('keyup', handleKeyEvent);
+
+    return () => window.removeEventListener('keyup', handleKeyEvent);
+  }, []);
+
+  return null;
 };
 
 const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
@@ -247,7 +281,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
   }, [isClear]);
 
   return (
-    <Flex mt={8} flexDir="column" gap={6}>
+    <Flex flexDir="column" gap={6}>
       <Flex justifyContent="center" alignItems="center" gap={4} flexWrap="wrap">
         {letterComps}
       </Flex>
@@ -256,35 +290,6 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
       </Flex>
     </Flex>
   );
-};
-
-const Shortcut = () => {
-  useEffect(() => {
-    const handleKeyEvent = (e: KeyboardEvent) => {
-      let key = e.key;
-
-      if (e.ctrlKey) {
-        if (key === 'a') key = 'ä';
-        else if (key === 'A') key = 'Ä';
-        else if (key === 'o') key = 'ö';
-        else if (key === 'O') key = 'Ö';
-        else if (key === 'u') key = 'ü';
-        else if (key === 'U') key = 'Ü';
-        else if (key === 's' || key === 'S') key = 'ß';
-      }
-
-      const elmt = document.querySelector<HTMLParagraphElement>(
-        `.filling-letter.${key}`
-      );
-      if (elmt) elmt.click();
-    };
-
-    window.addEventListener('keyup', handleKeyEvent);
-
-    return () => window.removeEventListener('keyup', handleKeyEvent);
-  }, []);
-
-  return null;
 };
 
 export default BlankFillGame;

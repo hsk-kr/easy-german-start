@@ -27,6 +27,14 @@
   }
 }
 
+@keyframes incorrect-puzzle {
+  from {
+  }
+  to {
+    background-color: #d6303150;
+  }
+}
+
 .anim-incorrect-answer {
   animation-name: incorrect-answer;
   animation-duration: 2s;
@@ -47,4 +55,12 @@
   animation-direction: alternate;
   animation-timing-function: linear;
   animation-iteration-count: 2;
+}
+
+.anim-incorrect-puzzle {
+  animation-name: incorrect-puzzle;
+  animation-duration: 0.5s;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
 }
