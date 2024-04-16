@@ -295,7 +295,7 @@ const TranslationPuzzleGame = ({
     <Box bgColor="green.500" minH="100svh">
       <Shortcut />
       <Guide message={'Select Words in the right order!'} />
-      <Container maxW="container.md" pt={[4, 12]} p={4}>
+      <Container maxW="container.md" pt={[4, 16]} p={4}>
         <Flex flexDir="column" gap={8}>
           <Progress colorScheme="blue" value={progress} />
           {existPuzzle && (

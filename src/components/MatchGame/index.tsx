@@ -84,7 +84,7 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   return (
     <Box bgColor="green.500" minH="100svh">
       <Guide message="Match the word with the correct description!" />
-      <Container maxW="container.md" pt={[4, 12]} p={4}>
+      <Container maxW="container.md" pt={[4, 16]} p={4}>
         <WordPairs
           left={currentRoundWordPairs.left}
           right={currentRoundWordPairs.right}

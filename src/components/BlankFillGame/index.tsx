@@ -55,7 +55,7 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
             : 'Select letters in the right order!'
         }
       />
-      <Container maxW="container.md" pt={[4, 12]} p={4}>
+      <Container maxW="container.md" pt={[4, 16]} p={4}>
         <Flex flexDir="column" gap={8}>
           <Progress colorScheme="blue" value={progress} />
           <Description>{currentWord?.desc}</Description>
