@@ -22,7 +22,7 @@ function Header() {
       color="white"
       bgColor="green.500"
       position="fixed"
-      zIndex={1}
+      zIndex={5}
       h={16}
     >
       <Container

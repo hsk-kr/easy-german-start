@@ -4,9 +4,10 @@ import HomePage from './pages/HomePage';
 import LearnPage from './pages/LearnPage';
 import ProfilePage from './pages/ProfilePage';
 import GamePage from './pages/GamePage';
-import CompletePage from './pages/CompletePage';
+import CompletionPage from './pages/CompletionPage';
 import './dayjs';
 import './anim.css';
+import theme from './theme';
 
 const router = createBrowserRouter([
   {
@@ -26,14 +27,14 @@ const router = createBrowserRouter([
     element: <GamePage />,
   },
   {
-    path: 'complete',
-    element: <CompletePage />,
+    path: 'completion',
+    element: <CompletionPage />,
   },
 ]);
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
     </ChakraProvider>
   );
