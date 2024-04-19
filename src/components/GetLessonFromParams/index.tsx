@@ -6,7 +6,7 @@ import { Lesson } from '../../types/lesson';
 type SearchParam = { section: number; lesson: number };
 
 interface GetLessonFromParamsProps {
-  onLoad: (lesson: Lesson) => void;
+  onLoad: (lesson: Lesson, sectionIndex: number, lessonIndex: number) => void;
 }
 
 const GetLessonFromParams = ({ onLoad }: GetLessonFromParamsProps) => {
@@ -53,7 +53,7 @@ const GetLessonFromParams = ({ onLoad }: GetLessonFromParamsProps) => {
   useEffect(() => {
     const { section, lesson } = getParams();
     if (!redirectHomeIfParamsIsInvalid({ section, lesson })) {
-      onLoad(getLesson(section, lesson));
+      onLoad(getLesson(section, lesson), section, lesson);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,16 +1,26 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 import DefaultTemplate from '../../components/DefaultTemplate';
 import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
 import BlankFillGame from '../../components/BlankFillGame';
 import MatchGame from '../../components/MatchGame';
 import GetLessonFromParams from '../../components/GetLessonFromParams';
 import { Lesson } from '../../types/lesson';
+import useHistory from '../../hooks/useHistory';
 
 const GamePage = () => {
   const [stage, setStage] = useState(0);
   const [currentLesson, setCurrentLesson] = useState<Lesson | undefined>(
     undefined
   );
+  const [indices, setIndices] = useState<{
+    section: number;
+    lesson: number;
+  }>({
+    section: -1,
+    lesson: -1,
+  });
+  const { addHistory } = useHistory();
 
   const game = useMemo(() => {
     if (!currentLesson) return null;
@@ -30,9 +40,27 @@ const GamePage = () => {
     }
   }, [currentLesson, stage]);
 
+  useEffect(() => {
+    if (stage < 3) return;
+
+    addHistory({
+      lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
+      lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
+      completedDate: dayjs.utc().toString(),
+      sectionIndex: indices.section,
+      lessonIndex: indices.lesson,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage]);
+
   return (
     <DefaultTemplate disablePadding bgGreen>
-      <GetLessonFromParams onLoad={(lesson) => setCurrentLesson(lesson)} />
+      <GetLessonFromParams
+        onLoad={(lesson, sectionIndex, lessonIndex) => {
+          setCurrentLesson(lesson);
+          setIndices({ section: sectionIndex, lesson: lessonIndex });
+        }}
+      />
       {game}
     </DefaultTemplate>
   );

@@ -1,7 +1,5 @@
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import DefaultTemplate from '../../components/DefaultTemplate';
-import GetLessonFromParams from '../../components/GetLessonFromParams';
-import { Lesson } from '../../types/lesson';
 import {
   Box,
   Container,
@@ -14,7 +12,10 @@ import { Image, Stage, Rect, Layer, Text } from 'react-konva';
 import styled from '@emotion/styled';
 import useImage from 'use-image';
 import useScreen from '../../hooks/useScreen';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import useHistory from '../../hooks/useHistory';
+import dayjs from 'dayjs';
+import { History } from '../../types/history';
 
 const CanvasWrapper = styled.div<{
   width: number;
@@ -45,21 +46,34 @@ const CanvasWrapper = styled.div<{
 `;
 
 function CompletionPage() {
+  const [searchParams] = useSearchParams();
   const { isDesktop } = useScreen();
   const navigate = useNavigate();
-  const [currentLesson, setCurrentLesson] = useState<Lesson | undefined>(
-    undefined
-  );
+  const { histories } = useHistory();
+  const [history, setHistory] = useState<History | null>(null);
+
+  const getSearchParamAsNumber = (pName: string): number | null => {
+    const nParam = Number(searchParams.get(pName));
+    return Number.isNaN(nParam) ? null : nParam;
+  };
 
   const navigateToLearnPage = () => {
     navigate('/learn');
   };
 
-  console.log(currentLesson);
+  useEffect(() => {
+    if (histories.length <= 0) return;
+    const idx = getSearchParamAsNumber('id');
+
+    const history =
+      idx === null ? histories[histories.length - 1] : histories[idx];
+    if (!history) return;
+    setHistory(history);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <DefaultTemplate disablePadding bgGreen>
-      <GetLessonFromParams onLoad={(lesson) => setCurrentLesson(lesson)} />
       <Box bgColor="green.500" minH="100svh">
         <Container maxW="container.md" p={4} pt={[4, 12]}>
           <Flex flexDir="column" gap={8}>
@@ -81,16 +95,23 @@ function CompletionPage() {
                 Congratulations!
               </ChakraText>
             </Flex>
-            <Certificate />
-            {isDesktop && (
-              <ChakraText
-                fontSize="lg"
-                color="white"
-                textAlign="right"
-                fontWeight="bold"
-              >
-                Hover your mouse on the certificate to download it.
-              </ChakraText>
+            {history !== null && (
+              <>
+                <Certificate
+                  lessonTitle={history.lessonTitle}
+                  completedDate={history.completedDate}
+                />
+                {isDesktop && (
+                  <ChakraText
+                    fontSize="lg"
+                    color="white"
+                    textAlign="right"
+                    fontWeight="bold"
+                  >
+                    Hover your mouse on the certificate to download it.
+                  </ChakraText>
+                )}
+              </>
             )}
           </Flex>
         </Container>
@@ -99,7 +120,13 @@ function CompletionPage() {
   );
 }
 
-function Certificate() {
+function Certificate({
+  lessonTitle,
+  completedDate,
+}: {
+  lessonTitle: string;
+  completedDate: string;
+}) {
   const { isDesktop } = useScreen();
   const [scale, setScale] = useState({
     x: 1,
@@ -109,8 +136,7 @@ function Certificate() {
   const [iconImg] = useImage('/icons/icon.webp');
   const STAGE_WIDTH = 1024,
     STAGE_HEIGHT = 768;
-  const lessonName = '10 COMMON WORDS';
-  const completedDate = '2024.04.18';
+  const date = dayjs(completedDate).format('YYYY.MM.DD');
 
   const downloadCertificate = () => {
     if (!stageRef.current) return;
@@ -194,7 +220,7 @@ function Certificate() {
             fontSize={48}
           />
           <Text
-            text={lessonName}
+            text={lessonTitle}
             x={0}
             width={STAGE_WIDTH}
             align="center"
@@ -219,7 +245,7 @@ function Certificate() {
             fill="black"
           />
           <Text
-            text={completedDate}
+            text={date}
             x={0}
             width={STAGE_WIDTH}
             y={420}
