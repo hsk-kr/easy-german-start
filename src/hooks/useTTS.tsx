@@ -20,20 +20,26 @@ const useTTS = () => {
   useEffect(() => {
     const { speechSynthesis } = window;
     if (!speechSynthesis) return;
+    const retryInterval = 1000;
 
     const initializer = () => {
-      const germanVoices = speechSynthesis
-        .getVoices()
-        .filter((v) => v.lang.includes('de'));
+      const voices = speechSynthesis.getVoices();
+      if (!voices?.length) {
+        setTimeout(initializer, retryInterval);
+        return;
+      }
+
+      const germanVoices = voices.filter((v) => v.lang.includes('de'));
       const randomGermanVoice =
         germanVoices[Math.floor(Math.random() * germanVoices.length)];
       setVoice(randomGermanVoice);
-
-      speechSynthesis.removeEventListener('voiceschanged', initializer);
     };
 
-    speechSynthesis.addEventListener('voiceschanged', initializer);
-    // let germanVoice = undefined ;
+    const retry = setTimeout(initializer, retryInterval);
+
+    return () => {
+      clearTimeout(retry);
+    };
   }, []);
 
   return {

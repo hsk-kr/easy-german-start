@@ -53,7 +53,10 @@ function CompletionPage() {
   const [history, setHistory] = useState<History | null>(null);
 
   const getSearchParamAsNumber = (pName: string): number | null => {
-    const nParam = Number(searchParams.get(pName));
+    const param = searchParams.get(pName);
+    if (param === null) return param;
+
+    const nParam = Number(param);
     return Number.isNaN(nParam) ? null : nParam;
   };
 
@@ -68,9 +71,10 @@ function CompletionPage() {
     const history =
       idx === null ? histories[histories.length - 1] : histories[idx];
     if (!history) return;
+
     setHistory(history);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [histories]);
 
   return (
     <DefaultTemplate disablePadding bgGreen>
@@ -95,7 +99,7 @@ function CompletionPage() {
                 Congratulations!
               </ChakraText>
             </Flex>
-            {history !== null && (
+            {history && (
               <>
                 <Certificate
                   lessonTitle={history.lessonTitle}

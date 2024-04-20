@@ -15,7 +15,10 @@ const GetLessonFromParams = ({ onLoad }: GetLessonFromParamsProps) => {
   const navigate = useNavigate();
 
   const getSearchParamAsNumber = (pName: string): number | null => {
-    const nParam = Number(searchParams.get(pName));
+    const param = searchParams.get(pName);
+    if (param === null) return param;
+
+    const nParam = Number(param);
     return Number.isNaN(nParam) ? null : nParam;
   };
 

@@ -33,7 +33,11 @@ const Guide = ({ message }: GuideProps) => {
       p={4}
     >
       {typeof message === 'object' ? (
-        message.map((m) => <Text fontSize="x-large">{m}</Text>)
+        message.map((m, mi) => (
+          <Text key={mi} fontSize="x-large">
+            {m}
+          </Text>
+        ))
       ) : (
         <Text fontSize="x-large">{message}</Text>
       )}

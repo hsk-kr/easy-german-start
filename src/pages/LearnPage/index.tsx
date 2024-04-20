@@ -4,37 +4,30 @@ import QuizSection from '../../components/QuizSection';
 import { useMemo } from 'react';
 import useLessons from '../../hooks/useLessons';
 import { useNavigate } from 'react-router-dom';
+import useHistory, { generateHistoryMapKey } from '../../hooks/useHistory';
 
 export function LearnPage() {
   const { sections } = useLessons();
-  const commonWords = [];
+  const { historyMap, sectionProgressMap } = useHistory();
   const navigate = useNavigate();
-
-  for (let i = 0; i < 10; i++) {
-    commonWords.push({
-      title: '10 Common Words',
-      desc: '10 Common German Words',
-      done: i % 2 === 0,
-    });
-  }
 
   const sectionElemts = useMemo(() => {
     return sections.map((section, sectionIdx) => (
       <QuizSection
         key={sectionIdx}
         title={`${sectionIdx + 1}. ${section.sectionName}`}
+        progressValue={sectionProgressMap.get(sectionIdx)}
         items={section.lessons.map((lesson, lessonIdx) => ({
           title: lesson.lessonTitle,
           desc: lesson.lessonDesc,
-          done: Math.floor(Math.random() * 2) === 0, //dummy
+          done: historyMap.has(generateHistoryMapKey(sectionIdx, lessonIdx)),
           onNav: () => {
             navigate(`/game?section=${sectionIdx}&lesson=${lessonIdx}`);
           },
         }))}
       />
     ));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [historyMap, navigate, sectionProgressMap, sections]);
 
   return (
     <DefaultTemplate>

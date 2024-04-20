@@ -16,6 +16,7 @@ import { CheckCircleIcon } from '@chakra-ui/icons';
 interface QuizSectionProps {
   title?: string;
   items?: QuizSectionItemProps[];
+  progressValue?: number;
 }
 
 interface QuizSectionItemProps {
@@ -25,14 +26,14 @@ interface QuizSectionItemProps {
   onNav?: VoidFunction;
 }
 
-function QuizSection({ title, items }: QuizSectionProps) {
+function QuizSection({ title, items, progressValue = 0 }: QuizSectionProps) {
   return (
     <Card border="1px solid black" borderColor="blackAlpha.100">
       <CardHeader>
         <Flex flexDir="column" rowGap={4}>
           <Heading size="md">{title}</Heading>
           <Tooltip label="1 / 24 - 60%">
-            <Progress hasStripe value={60} maxW="240px" />
+            <Progress hasStripe value={progressValue} maxW="240px" />
           </Tooltip>
         </Flex>
       </CardHeader>

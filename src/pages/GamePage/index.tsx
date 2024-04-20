@@ -7,6 +7,7 @@ import MatchGame from '../../components/MatchGame';
 import GetLessonFromParams from '../../components/GetLessonFromParams';
 import { Lesson } from '../../types/lesson';
 import useHistory from '../../hooks/useHistory';
+import { useNavigate } from 'react-router-dom';
 
 const GamePage = () => {
   const [stage, setStage] = useState(0);
@@ -21,6 +22,7 @@ const GamePage = () => {
     lesson: -1,
   });
   const { addHistory } = useHistory();
+  const navigate = useNavigate();
 
   const game = useMemo(() => {
     if (!currentLesson) return null;
@@ -50,6 +52,7 @@ const GamePage = () => {
       sectionIndex: indices.section,
       lessonIndex: indices.lesson,
     });
+    navigate(`/completion`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage]);
 
