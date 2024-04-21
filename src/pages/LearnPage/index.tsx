@@ -5,13 +5,16 @@ import { useMemo } from 'react';
 import useLessons from '../../hooks/useLessons';
 import { useNavigate } from 'react-router-dom';
 import useHistory, { generateHistoryMapKey } from '../../hooks/useHistory';
+import FullscreenLoading from '../../components/FullscreenLoading';
 
 export function LearnPage() {
   const { sections } = useLessons();
-  const { historyMap, sectionProgressMap } = useHistory();
+  const { historyMap, sectionProgressMap, loading } = useHistory();
   const navigate = useNavigate();
 
-  const sectionElemts = useMemo(() => {
+  const sectionElmts = useMemo(() => {
+    if (!historyMap) return [];
+
     return sections.map((section, sectionIdx) => (
       <QuizSection
         key={sectionIdx}
@@ -31,11 +34,14 @@ export function LearnPage() {
 
   return (
     <DefaultTemplate>
-      <Container maxW="container.lg" p={0}>
-        <VStack spacing={8} align="stretch">
-          {sectionElemts}
-        </VStack>
-      </Container>
+      <FullscreenLoading visible={loading} useRandomInitialLoadingTime />
+      {!loading && (
+        <Container maxW="container.lg" p={0}>
+          <VStack spacing={8} align="stretch">
+            {sectionElmts}
+          </VStack>
+        </Container>
+      )}
     </DefaultTemplate>
   );
 }

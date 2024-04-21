@@ -4,14 +4,13 @@ import { History } from '../types/history';
 import useLessons from './useLessons';
 
 const useHistory = () => {
-  const [h, setH] = useState<History[]>([]);
-  const [historyMap, setHistoryMap] = useState<Map<string, boolean>>(
-    () => new Map()
-  ); // Mark completed lessons
+  const [h, setH] = useState<History[]>();
+  const [historyMap, setHistoryMap] = useState<Map<string, boolean>>(); // Mark completed lessons
   const [sectionProgressMap, setSectionProressMap] = useState<
     Map<number, number>
   >(() => new Map()); // sectionIdx, progressValue(0~100)
   const { sections } = useLessons();
+  const loading = h === undefined || historyMap === undefined;
 
   const addHistory = (history: History) => {
     const histories = getHistories();
@@ -20,6 +19,7 @@ const useHistory = () => {
   };
 
   useEffect(() => {
+    if (!h) return;
     const newHistoryMap: typeof historyMap = new Map();
     const newSectionProgressMap: typeof sectionProgressMap = new Map();
 
@@ -73,6 +73,7 @@ const useHistory = () => {
   }, []);
 
   return {
+    loading,
     histories: h,
     addHistory,
     historyMap,
