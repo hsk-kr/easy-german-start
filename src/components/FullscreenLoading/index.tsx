@@ -40,6 +40,7 @@ const FullscreenLoading = ({
       justifyContent="center"
       alignItems="center"
       backgroundColor="blackAlpha.700"
+      data-testid="full-screen-loading"
     >
       <Image
         src={Icon}
