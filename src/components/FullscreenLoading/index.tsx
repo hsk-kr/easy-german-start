@@ -1,5 +1,5 @@
 import { Flex, Image } from '@chakra-ui/react';
-import Icon from './icon.webp';
+import Icon from './icon.png';
 import { useEffect, useState } from 'react';
 
 const FullscreenLoading = ({

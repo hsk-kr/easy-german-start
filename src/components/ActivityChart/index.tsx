@@ -44,6 +44,7 @@ function ActivityChart({ histories }: ActivityChartProps) {
   const [currentYear, setCurrentYear] = useState<Year>('past year');
   const [loading, setLoading] = useState(true);
 
+  //! Needs to refactor
   useEffect(() => {
     if (histories === undefined) return;
 
@@ -56,6 +57,23 @@ function ActivityChart({ histories }: ActivityChartProps) {
     const historyActivityMap: ChartBodyProps['values'] = new Map();
     const currentStreak: typeof maxStreakPerYear = new Map();
     let previousHistory: Dayjs | undefined = undefined;
+
+    const calcMaxStreakForPreviousYear = (
+      previousYear: Year,
+      currentYear: Year
+    ) => {
+      const previousYearMaxStreak = maxStreakPerYear.get(previousYear) ?? 0;
+      const previousYearStreak = currentStreak.get(previousYear) ?? 0;
+      if (previousYearStreak > previousYearMaxStreak) {
+        maxStreakPerYear.set(previousYear, previousYearStreak);
+        currentStreak.set(currentYear, 1);
+      }
+    };
+
+    const isWithinPastYear = (date: Dayjs) => {
+      const pastYear = dayjs.utc().subtract(1, 'year').hour(0);
+      return pastYear <= date.hour(23);
+    };
 
     for (const history of histories) {
       // To calculate the exact different day using diff func.
@@ -80,18 +98,10 @@ function ActivityChart({ histories }: ActivityChartProps) {
           completedDateAsDayjs.diff(previousHistory, 'day')
         );
 
-        const calcMaxStreakForPreviousYear = () => {
-          const previousYearMaxStreak = maxStreakPerYear.get(previousYear) ?? 0;
-          const previousYearStreak = currentStreak.get(previousYear) ?? 0;
-          if (previousYearStreak > previousYearMaxStreak) {
-            maxStreakPerYear.set(previousYear, previousYearStreak);
-            currentStreak.set(currentYear, 1);
-          }
-        };
-
         if (dateDiff >= 1 && dateDiff < 2) {
           // max streak for PAST_YEAR
-          const pastYearStreak = (currentStreak.get(PAST_YEAR) ?? 0) + 1;
+          const w = isWithinPastYear(completedDateAsDayjs) ? 1 : 0;
+          const pastYearStreak = (currentStreak.get(PAST_YEAR) ?? 0) + w;
           const pastYearMaxStreak = maxStreakPerYear.get(PAST_YEAR) ?? 0;
           currentStreak.set(PAST_YEAR, pastYearStreak);
           if (pastYearStreak > pastYearMaxStreak) {
@@ -101,7 +111,7 @@ function ActivityChart({ histories }: ActivityChartProps) {
           // When the two days have different years,
           // the previous year needs to be done by comparing the maximum number for the last.
           if (currentYear !== previousYear) {
-            calcMaxStreakForPreviousYear();
+            calcMaxStreakForPreviousYear(previousYear, currentYear);
           } else {
             const currentYearMaxStreak = maxStreakPerYear.get(currentYear) ?? 0;
             const currentYearStreak = (currentStreak.get(currentYear) ?? 0) + 1;
@@ -116,32 +126,34 @@ function ActivityChart({ histories }: ActivityChartProps) {
           currentStreak.set(currentYear, 1);
 
           if (currentYear !== previousYear) {
-            calcMaxStreakForPreviousYear();
+            calcMaxStreakForPreviousYear(previousYear, currentYear);
           }
         }
 
         // totalActivityDays
         if (dateDiff >= 1) {
-          totalActivityDaysPerYear.set(
-            PAST_YEAR,
-            (totalActivityDaysPerYear.get(PAST_YEAR) ?? 0) + 1
-          );
+          if (isWithinPastYear(completedDateAsDayjs)) {
+            totalActivityDaysPerYear.set(
+              PAST_YEAR,
+              (totalActivityDaysPerYear.get(PAST_YEAR) ?? 0) + 1
+            );
+          }
           totalActivityDaysPerYear.set(
             currentYear,
             (totalActivityDaysPerYear.get(currentYear) ?? 0) + 1
           );
         }
       } else {
-        currentStreak.set(PAST_YEAR, 1);
+        if (isWithinPastYear(completedDateAsDayjs)) {
+          currentStreak.set(PAST_YEAR, 1);
+          totalActivityDaysPerYear.set(PAST_YEAR, 1);
+        }
         currentStreak.set(currentYear, 1);
-        totalActivityDaysPerYear.set(PAST_YEAR, 1);
         totalActivityDaysPerYear.set(currentYear, 1);
       }
 
       // count per year
-      const isWithinPastYear =
-        completedDateAsDayjs.diff(previousHistory, 'year') < 1;
-      if (isWithinPastYear) {
+      if (isWithinPastYear(completedDateAsDayjs)) {
         numOfLessonsPerYear.set(
           PAST_YEAR,
           (numOfLessonsPerYear.get(PAST_YEAR) ?? 0) + 1
