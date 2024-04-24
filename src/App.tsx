@@ -9,28 +9,33 @@ import './dayjs';
 import './anim.css';
 import theme from './theme';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <HomePage />,
+    },
+    {
+      path: '/learn',
+      element: <LearnPage />,
+    },
+    {
+      path: 'profile',
+      element: <ProfilePage />,
+    },
+    {
+      path: 'game',
+      element: <GamePage />,
+    },
+    {
+      path: 'completion',
+      element: <CompletionPage />,
+    },
+  ],
   {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/learn',
-    element: <LearnPage />,
-  },
-  {
-    path: 'profile',
-    element: <ProfilePage />,
-  },
-  {
-    path: 'game',
-    element: <GamePage />,
-  },
-  {
-    path: 'completion',
-    element: <CompletionPage />,
-  },
-]);
+    basename: import.meta.env.VITE_BASE_URL,
+  }
+);
 
 function App() {
   return (
