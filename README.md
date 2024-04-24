@@ -1,5 +1,11 @@
 # Easy German Start
 
+It's still under develpoment.
+
+[Preview](https://hsk-kr.github.io/easy-german-start/)
+
+---
+
 You don't know where to start German? Start here!
 
 It doesn't make your German fluent. However, you willl find yourself being familar with German more while solving quizzes on `Easy German Start`.
