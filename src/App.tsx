@@ -37,6 +37,9 @@ const router = createBrowserRouter(
   }
 );
 
+console.log(import.meta.env);
+console.log(import.meta.env.VITE_BASE_URL);
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
