@@ -33,12 +33,9 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: import.meta.env.VITE_BASE_URL,
+    basename: import.meta.env.BASE_URL,
   }
 );
-
-console.log(import.meta.env);
-console.log(import.meta.env.VITE_BASE_URL);
 
 function App() {
   return (
