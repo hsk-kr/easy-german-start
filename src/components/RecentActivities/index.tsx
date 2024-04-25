@@ -1,56 +1,65 @@
 import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-/**
- * what needs to be shown in this list
- *
- * columns
- *
- *
- */
+import useHistory from '../../hooks/useHistory';
+import { useEffect, useMemo, useState } from 'react';
+import FullscreenLoading from '../FullscreenLoading';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ActivityProps {
   no: number;
+  id: number;
   title: string;
   desc: string;
   date: dayjs.Dayjs;
 }
 
+const NUM_OF_HISTORIES_ONE_PAGE = 5;
+
 const RecentActivities = () => {
-  const sampleData = [
-    {
-      no: 5,
-      title: 'German 25 words',
-      desc: 'German 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 words',
-      date: dayjs.utc().subtract(1, 'day'),
-    },
-    {
-      no: 4,
-      title: 'German 25 words',
-      desc: 'German 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 words',
-      date: dayjs.utc().subtract(2, 'day'),
-    },
-    {
-      no: 3,
-      title: 'German 25 words',
-      desc: 'German 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 words',
-      date: dayjs.utc().subtract(3, 'day'),
-    },
-    {
-      no: 2,
-      title: 'German 25 words',
-      desc: 'German 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 words',
-      date: dayjs.utc().subtract(4, 'day'),
-    },
-    {
-      no: 1,
-      title: 'German 25 words',
-      desc: 'German 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 wordsGerman 25 words',
-      date: dayjs.utc().subtract(5, 'day'),
-    },
-  ];
+  const [searchParams, setSearchParams] = useSearchParams();
+  let num = Number(searchParams.get('num'));
+  num =
+    Number.isNaN(num) || num < NUM_OF_HISTORIES_ONE_PAGE
+      ? NUM_OF_HISTORIES_ONE_PAGE
+      : num;
+  const [numHistories, setNumHistories] = useState(num);
+  const { histories } = useHistory();
+  const reversedActivities = useMemo(() => {
+    if (histories === undefined) return null;
+
+    return histories.toReversed();
+  }, [histories]);
+  const activities = useMemo(() => {
+    if (reversedActivities === null) return null;
+
+    return reversedActivities.slice(0, numHistories).map((h, hIndex) => ({
+      no: reversedActivities.length - hIndex,
+      id: reversedActivities.length - hIndex - 1,
+      title: h.lessonTitle,
+      desc: h.lessonDesc,
+      date: dayjs.utc(h.completedDate),
+    }));
+  }, [reversedActivities, numHistories]);
+
+  const more = () => {
+    const nextNumHistories = numHistories + NUM_OF_HISTORIES_ONE_PAGE;
+    setNumHistories(nextNumHistories);
+  };
+
+  useEffect(() => {
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set('num', numHistories.toString());
+      return prevSearchParams;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numHistories]);
+
+  const loading = activities === null;
+  const hasMore = histories !== undefined && numHistories < histories.length;
 
   return (
     <Box bgColor="green.500" p={4} borderRadius={4} color="white">
+      <FullscreenLoading useRandomInitialLoadingTime visible={loading} />
       <Text
         textTransform="uppercase"
         fontWeight="bold"
@@ -60,29 +69,32 @@ const RecentActivities = () => {
         Recent Activities
       </Text>
       <Divider my={4} />
-      {sampleData.map((d) => (
-        <Activity key={d.no} {...d} />
-      ))}
-      <Flex justifyContent="center" alignItems="center">
-        <Button
-          colorScheme="white"
-          variant="outline"
-          transition="all 0.2s"
-          _hover={{
-            transform: 'scale(1.05)',
-          }}
-        >
-          MORE
-        </Button>
-      </Flex>
+      {activities?.map((d) => <Activity key={d.no} {...d} />)}
+      {hasMore && (
+        <Flex justifyContent="center" alignItems="center">
+          <Button
+            colorScheme="white"
+            variant="outline"
+            transition="all 0.2s"
+            _hover={{
+              transform: 'scale(1.05)',
+            }}
+            onClick={more}
+          >
+            MORE
+          </Button>
+        </Flex>
+      )}
     </Box>
   );
 };
 
-const Activity = ({ no, title, desc, date }: ActivityProps) => {
+const Activity = ({ no, id, title, desc, date }: ActivityProps) => {
   const now = dayjs.utc();
   const dateText =
     date <= now.subtract(2, 'day') ? date.format('YYYY-MM-DD') : date.fromNow();
+  const navigate = useNavigate();
+  const rediredctToCompletionPage = () => navigate(`/completion?id=${id}`);
 
   return (
     <Flex
@@ -93,18 +105,20 @@ const Activity = ({ no, title, desc, date }: ActivityProps) => {
       justifyContent="space-between"
       alignItems="center"
       gap={4}
+      cursor="pointer"
       transition="all 0.25s"
       _hover={{
         backgroundColor: 'white',
         color: 'green',
       }}
+      onClick={rediredctToCompletionPage}
     >
       <Flex flexDirection="column" justifyContent="center">
         <Text
           fontSize={['large', 'large', 'x-large']}
           fontWeight="bold"
           noOfLines={1}
-        >{`${no}.${title}`}</Text>
+        >{`${no}) ${title}`}</Text>
         <Text
           pl={2}
           noOfLines={1}
