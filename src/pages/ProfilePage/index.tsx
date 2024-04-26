@@ -1,7 +1,8 @@
-import { Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import ActivityChart from '../../components/ActivityChart';
 import DefaultTemplate from '../../components/DefaultTemplate';
 import RecentActivities from '../../components/RecentActivities';
+import DataLoader from '../../components/DataLoader';
 import useHistory from '../../hooks/useHistory';
 
 function ProfilePage() {
@@ -9,9 +10,18 @@ function ProfilePage() {
 
   return (
     <DefaultTemplate>
-      <Container maxW="container.lg" p={0}>
+      <Container maxW="container.lg" p={0} position="relative">
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          transform="translateY(calc(-100% - 8px))"
+        >
+          <DataLoader />
+        </Box>
         {histories !== undefined && <ActivityChart histories={histories} />}
-        <div style={{ height: 32 }} />
+        <Box h={8}></Box>
         <RecentActivities />
       </Container>
     </DefaultTemplate>
