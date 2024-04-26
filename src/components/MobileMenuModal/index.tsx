@@ -3,6 +3,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MouseEvent, useEffect } from 'react';
 import StreakBadge from '../StreakBadge';
+import useHistory from '../../hooks/useHistory';
 
 interface MobileMenuModalProps {
   visible?: boolean;
@@ -52,6 +53,8 @@ function MobileMenuModal({ visible, onClose }: MobileMenuModalProps) {
 }
 
 function Profile() {
+  const { streak } = useHistory();
+
   return (
     <Flex p={4} alignItems="center" columnGap={4}>
       <Link to="/profile">
@@ -65,7 +68,9 @@ function Profile() {
               opacity: 0.8,
             }}
           />
-          <StreakBadge number={10} />
+          {streak !== undefined && (
+            <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
+          )}
         </Flex>
       </Link>
     </Flex>
