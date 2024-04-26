@@ -1,3 +1,12 @@
+@keyframes entry-image-change {
+  from {
+    filter: blur(8px);
+  }
+  to {
+    filter: blur(0px);
+  }
+}
+
 @keyframes fullscreen-loading {
   0% {
     transform: rotateY(0deg);
@@ -86,4 +95,10 @@
   animation-direction: alternate;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+}
+
+.anim-entry-image-change {
+  animation-name: entry-image-change;
+  animation-duration: 2s;
+  animation-timing-function: linear;
 }

@@ -1,7 +1,147 @@
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import DefaultTemplate from '../../components/DefaultTemplate';
+import FirstImage from './res/a.webp';
+import SecondImage from './res/b.webp';
+import ThirdImage from './res/c.webp';
+import FourthImage from './res/d.webp';
+import { useEffect, useRef, useState } from 'react';
+import styled from '@emotion/styled';
 
 function HomePage() {
-  return <DefaultTemplate disablePadding>HOME</DefaultTemplate>;
+  return (
+    <DefaultTemplate disablePadding>
+      <Entry />
+      <Padding />
+      <Padding />
+    </DefaultTemplate>
+  );
+}
+
+const ImageRow = styled(Flex)`
+  height: 50%;
+
+  > img {
+    flex: 1;
+    max-width: 50%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+function Entry() {
+  const imgs = [FirstImage, SecondImage, ThirdImage, FourthImage];
+  const [imgIndices, setImgIndices] = useState([0, 1, 2, 3]);
+  const [animImgIndex, setAnimImgIndex] = useState(-1);
+  const tmRef = useRef<{ tmChangeImg: NodeJS.Timeout | undefined }>({
+    tmChangeImg: undefined,
+  });
+
+  const handleAnimEnd = () => setAnimImgIndex(-1);
+
+  const changeImg = () => {
+    tmRef.current.tmChangeImg = setTimeout(
+      () => {
+        const randomIdx = Math.floor(Math.random() * imgIndices.length);
+        let prevRandImgIdx = -1;
+
+        setImgIndices((prevImgIndices) => {
+          const newImgIndices = [...prevImgIndices];
+          let nextRandImgIdx;
+
+          do {
+            nextRandImgIdx = Math.floor(Math.random() * imgs.length);
+          } while (prevRandImgIdx === nextRandImgIdx);
+
+          prevRandImgIdx = nextRandImgIdx;
+          newImgIndices[randomIdx] = nextRandImgIdx;
+          return newImgIndices;
+        });
+
+        setAnimImgIndex(randomIdx);
+      },
+      1000 + Math.floor(Math.random() * 500)
+    );
+  };
+
+  useEffect(() => {
+    if (animImgIndex === -1) changeImg();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animImgIndex]);
+
+  useEffect(() => {
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      clearTimeout(tmRef.current.tmChangeImg);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Flex
+      position="relative"
+      overflowY="hidden"
+      minH="calc(100svh - 64px)"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Flex
+        position="absolute"
+        flexDir="column"
+        width="100%"
+        height="100%"
+        opacity={0.3}
+      >
+        <ImageRow>
+          <Image
+            alt="learn german"
+            src={imgs[imgIndices[0]]}
+            className={animImgIndex === 0 ? 'anim-entry-image-change' : ''}
+            onAnimationEnd={handleAnimEnd}
+          />
+          <Image
+            alt="learn german"
+            src={imgs[imgIndices[1]]}
+            className={animImgIndex === 1 ? 'anim-entry-image-change' : ''}
+            onAnimationEnd={handleAnimEnd}
+          />
+        </ImageRow>
+        <ImageRow>
+          <Image
+            alt="learn german"
+            src={imgs[imgIndices[2]]}
+            className={animImgIndex === 2 ? 'anim-entry-image-change' : ''}
+            onAnimationEnd={handleAnimEnd}
+          />
+          <Image
+            alt="learn german"
+            src={imgs[imgIndices[3]]}
+            className={animImgIndex === 3 ? 'anim-entry-image-change' : ''}
+            onAnimationEnd={handleAnimEnd}
+          />
+        </ImageRow>
+      </Flex>
+      <Text
+        zIndex={1}
+        fontSize={['xx-large', 'xxx-large']}
+        color="#fff"
+        textShadow="0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #ffce00,
+      0 0 42px #000,
+      0 0 82px #ff0000,
+      0 0 92px #ffce00,
+      0 0 102px #ff0000,
+      0 0 151px #ffce00"
+      >
+        Don't Study, Enjoy It
+      </Text>
+    </Flex>
+  );
+}
+
+function Padding() {
+  return <Box bg="white" minH="100svh"></Box>;
 }
 
 export default HomePage;
