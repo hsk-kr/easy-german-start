@@ -3,13 +3,14 @@ import { BsFire } from 'react-icons/bs';
 
 interface StreakBadgeProps {
   number: number;
+  doneToday: boolean;
 }
 
-const StreakBadge = ({ number }: StreakBadgeProps) => {
+const StreakBadge = ({ number, doneToday }: StreakBadgeProps) => {
   return (
     <Tooltip label="UTC based">
       <Flex>
-        <BsFire />
+        <BsFire color={doneToday ? 'orange' : 'white'} />
         <Text fontSize="small" fontWeight="bold">
           {number}
         </Text>

@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import {
@@ -15,6 +16,7 @@ import {
 } from '../libs/store';
 import { History } from '../types/history';
 import useLessons from './useLessons';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface HistoryContextType {
   loading: boolean;
@@ -25,6 +27,7 @@ interface HistoryContextType {
   setHistories: typeof setHistories;
   getHistories: typeof getHistories;
   clearHistories: typeof clearHistories;
+  streak: { cnt: number; doneToday: boolean } | undefined;
 }
 
 const HistoryContext = createContext<HistoryContextType>(null!);
@@ -36,6 +39,53 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
     Map<number, number>
   >(() => new Map()); // sectionIdx, progressValue(0~100)
   const { sections } = useLessons();
+  const streak = useMemo(() => {
+    if (!h) return undefined;
+
+    const today = dayjs.utc();
+    let cur = today;
+    let streak = 0;
+    let doneToday = false;
+
+    const isSameDay = (a: Dayjs, b: Dayjs) => {
+      return a.isSame(b, 'year') && a.isSame(b, 'month') && a.isSame(b, 'date');
+    };
+
+    for (let i = h.length - 1; i >= 0; i--) {
+      const completedDateAsDayjs = dayjs(h[i].completedDate);
+      if (i <= h.length - 2) {
+        const previousDate = dayjs(h[i + 1].completedDate);
+        const sameDayWithPreviousHistory = isSameDay(
+          completedDateAsDayjs,
+          previousDate
+        );
+        if (sameDayWithPreviousHistory) continue;
+      }
+
+      const same = isSameDay(cur, completedDateAsDayjs);
+
+      if (!same) {
+        // today can be ignored but doneToday will be false.
+        if (i === h.length - 1) {
+          cur = cur.subtract(1, 'day');
+          i++;
+          continue;
+        } else {
+          break;
+        }
+      } else {
+        if (isSameDay(cur, today)) doneToday = true;
+        streak++;
+      }
+
+      cur = cur.subtract(1, 'day');
+    }
+
+    return {
+      cnt: streak,
+      doneToday,
+    };
+  }, [h]);
   const loading = h === undefined || historyMap === undefined;
 
   const addHistory = useCallback((history: History) => {
@@ -117,6 +167,7 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
     getHistories,
     setHistories: setHistoriesAndH,
     clearHistories: clearHistoriesAndH,
+    streak,
   };
 
   return (

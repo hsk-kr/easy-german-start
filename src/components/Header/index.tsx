@@ -12,9 +12,11 @@ import { FaBars } from 'react-icons/fa';
 import DesktopNavbar from '../DesktopNavbar';
 import MobileMenuModal from '../MobileMenuModal';
 import StreakBadge from '../StreakBadge';
+import useHistory from '../../hooks/useHistory';
 
 function Header() {
   const mobileMenuModal = useDisclosure();
+  const { streak } = useHistory();
 
   return (
     <Box
@@ -62,7 +64,9 @@ function Header() {
               md: 'flex',
             }}
           >
-            <StreakBadge number={10} />
+            {streak !== undefined && (
+              <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
+            )}
             <Link to="/profile">
               <Avatar
                 src="https://bit.ly/broken-link"
