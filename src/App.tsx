@@ -8,6 +8,7 @@ import CompletionPage from './pages/CompletionPage';
 import './dayjs';
 import './anim.css';
 import theme from './theme';
+import { HistoryProvider } from './hooks/useHistory';
 
 const router = createBrowserRouter(
   [
@@ -40,7 +41,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <RouterProvider router={router} />
+      <HistoryProvider>
+        <RouterProvider router={router} />
+      </HistoryProvider>
     </ChakraProvider>
   );
 }

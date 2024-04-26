@@ -43,22 +43,8 @@ const GamePage = () => {
   }, [currentLesson, stage]);
 
   // complete the lesson without playing for test purpos
-  useEffect(() => {
-    if (!currentLesson) return;
-    addHistory({
-      lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
-      lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
-      completedDate: dayjs.utc().toString(),
-      sectionIndex: indices.section,
-      lessonIndex: indices.lesson,
-    });
-    navigate(`/completion`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLesson]);
-
   // useEffect(() => {
-  //   if (stage < 3) return;
-
+  //   if (!currentLesson) return;
   //   addHistory({
   //     lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
   //     lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
@@ -68,7 +54,21 @@ const GamePage = () => {
   //   });
   //   navigate(`/completion`);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [stage]);
+  // }, [currentLesson]);
+
+  useEffect(() => {
+    if (stage < 3) return;
+
+    addHistory({
+      lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
+      lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
+      completedDate: dayjs.utc().toString(),
+      sectionIndex: indices.section,
+      lessonIndex: indices.lesson,
+    });
+    navigate(`/completion`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage]);
 
   return (
     <DefaultTemplate disablePadding bgGreen>

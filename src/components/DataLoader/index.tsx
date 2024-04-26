@@ -1,9 +1,10 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
-import { clearHistories, getHistories, setHistories } from '../../libs/store';
 import dayjs from 'dayjs';
 import { ChangeEvent, useRef } from 'react';
+import useHistory from '../../hooks/useHistory';
 
 const DataLoader = () => {
+  const { getHistories, setHistories, clearHistories } = useHistory();
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +33,6 @@ const DataLoader = () => {
     try {
       const histories = JSON.parse(json);
       setHistories(histories);
-      location.reload();
     } catch {
       alert('Failed to import the file. Check if you uplaoded a correct file.');
     }
@@ -63,7 +63,6 @@ const DataLoader = () => {
       )
     ) {
       clearHistories();
-      location.reload();
     }
   };
 
