@@ -256,7 +256,6 @@ const TranslationPuzzleGame = ({
   const existPuzzle = currentIdx !== -1;
 
   const handlePuzzleClear = () => {
-    onClear();
     if (currentIdx === examples.length - 1) {
       onClear();
     } else {
