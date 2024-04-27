@@ -13,7 +13,7 @@ function HomePage() {
   return (
     <DefaultTemplate disablePadding>
       <EntrySection />
-      {/* <DemoSection /> */}
+      <DemoSection />
       <Padding />
       <Padding />
     </DefaultTemplate>
@@ -163,7 +163,7 @@ function DemoSection() {
 
   return (
     <Box height="240px">
-      <Text fontSize="xxx-large">Try</Text>
+      <Text fontSize="xxx-large"></Text>
       <MatchGame noGuide lesson={lesson} onClear={() => alert('test')} />
     </Box>
   );
