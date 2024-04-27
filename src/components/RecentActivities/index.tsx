@@ -2,7 +2,6 @@ import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import useHistory from '../../hooks/useHistory';
 import { useEffect, useMemo, useState } from 'react';
-import FullscreenLoading from '../FullscreenLoading';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ActivityProps {
@@ -15,7 +14,11 @@ interface ActivityProps {
 
 const NUM_OF_HISTORIES_ONE_PAGE = 5;
 
-const RecentActivities = () => {
+interface RecentActivitiesProps {
+  onLoad?: VoidFunction;
+}
+
+const RecentActivities = ({ onLoad }: RecentActivitiesProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   let num = Number(searchParams.get('num'));
   num =
@@ -54,12 +57,17 @@ const RecentActivities = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numHistories]);
 
-  const loading = activities === null;
+  useEffect(() => {
+    if (activities === null) return;
+
+    onLoad?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activities]);
+
   const hasMore = histories !== undefined && numHistories < histories.length;
 
   return (
     <Box bgColor="green.500" p={4} borderRadius={4} color="white">
-      <FullscreenLoading useRandomInitialLoadingTime visible={loading} />
       <Text
         textTransform="uppercase"
         fontWeight="bold"

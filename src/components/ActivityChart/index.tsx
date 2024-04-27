@@ -2,7 +2,6 @@ import { Box, Flex, Select, Text, Tooltip } from '@chakra-ui/react';
 import dayjs, { Dayjs } from 'dayjs';
 import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from 'react';
 import { History } from '../../types/history';
-import FullscreenLoading from '../FullscreenLoading';
 
 const PAST_YEAR = 'past year' as const;
 
@@ -12,6 +11,7 @@ type Year = typeof PAST_YEAR | number;
 
 interface ActivityChartProps {
   histories: History[];
+  onLoad?: VoidFunction;
 }
 
 interface ChartHeaderProps {
@@ -28,7 +28,7 @@ interface ChartBodyProps {
   year?: Year;
 }
 
-function ActivityChart({ histories }: ActivityChartProps) {
+function ActivityChart({ histories, onLoad }: ActivityChartProps) {
   const [maxStreakPerYear, setMaxStreakPerYear] = useState<Map<Year, number>>(
     new Map()
   );
@@ -180,6 +180,13 @@ function ActivityChart({ histories }: ActivityChartProps) {
     setLoading(false);
   }, [histories]);
 
+  useEffect(() => {
+    if (loading) return;
+
+    onLoad?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   const maxStreak = maxStreakPerYear.get(currentYear) ?? 0;
   const totalActivityDays = totalActivityDaysPerYear.get(currentYear) ?? 0;
 
@@ -191,7 +198,6 @@ function ActivityChart({ histories }: ActivityChartProps) {
       p={4}
       borderRadius={4}
     >
-      <FullscreenLoading useRandomInitialLoadingTime visible={loading} />
       {!loading && (
         <>
           <ChartHeader

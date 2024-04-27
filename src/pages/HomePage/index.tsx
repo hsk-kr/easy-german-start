@@ -38,24 +38,23 @@ function EntrySection() {
   const tmRef = useRef<{ tmChangeImg: NodeJS.Timeout | undefined }>({
     tmChangeImg: undefined,
   });
+  const prevRandomIdx = useRef<number>(-1); // prevent changing the same image that changed right before.
 
   const handleAnimEnd = () => setAnimImgIndex(-1);
 
   const changeImg = () => {
     tmRef.current.tmChangeImg = setTimeout(
       () => {
-        const randomIdx = Math.floor(Math.random() * imgIndices.length);
-        let prevRandImgIdx = -1;
+        let randomIdx: number;
+
+        do {
+          randomIdx = Math.floor(Math.random() * imgIndices.length);
+        } while (prevRandomIdx.current === randomIdx);
+        prevRandomIdx.current = randomIdx;
 
         setImgIndices((prevImgIndices) => {
           const newImgIndices = [...prevImgIndices];
-          let nextRandImgIdx;
-
-          do {
-            nextRandImgIdx = Math.floor(Math.random() * imgs.length);
-          } while (prevRandImgIdx === nextRandImgIdx);
-
-          prevRandImgIdx = nextRandImgIdx;
+          const nextRandImgIdx = Math.floor(Math.random() * imgs.length);
           newImgIndices[randomIdx] = nextRandImgIdx;
           return newImgIndices;
         });
