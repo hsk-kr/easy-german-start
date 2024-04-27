@@ -10,7 +10,7 @@ import {
 import { DownloadIcon } from '@chakra-ui/icons';
 import { Image, Stage, Rect, Layer, Text } from 'react-konva';
 import styled from '@emotion/styled';
-import useImage from 'use-image';
+import useImage from '../../hooks/useImage';
 import useScreen from '../../hooks/useScreen';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useHistory from '../../hooks/useHistory';
