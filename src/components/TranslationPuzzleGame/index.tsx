@@ -111,9 +111,13 @@ const Puzzle = ({
           transition="0.25s all"
           p={1}
           borderRadius="lg"
-          _hover={{
-            bg: '#74b9ff80',
-          }}
+          _hover={
+            isDesktop
+              ? {
+                  bg: '#74b9ff80',
+                }
+              : {}
+          }
           onAnimationEnd={() => setErrorPuzzleIndex(-1)}
           className={errorPuzzleIndex === index ? 'anim-incorrect-puzzle' : ''}
           onClick={() => setSelectedPuzzleIndex(index)}
@@ -252,6 +256,7 @@ const TranslationPuzzleGame = ({
   const existPuzzle = currentIdx !== -1;
 
   const handlePuzzleClear = () => {
+    onClear();
     if (currentIdx === examples.length - 1) {
       onClear();
     } else {
@@ -292,7 +297,7 @@ const TranslationPuzzleGame = ({
   const progress = Math.floor((currentIdx / examples.length) * 100);
 
   return (
-    <Box bgColor="green.500" minH="100svh">
+    <Box bgColor="green.500" h="100%">
       <Shortcut />
       <Guide message={'Select Words in the right order!'} />
       <Container maxW="container.md" pt={[4, 16]} p={4}>

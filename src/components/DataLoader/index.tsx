@@ -72,7 +72,9 @@ const DataLoader = () => {
         type="file"
         ref={fileRef}
         onChange={handleFileChange}
-        style={{ minHeight: 0, height: 0, position: 'absolute' }}
+        style={{
+          display: 'none',
+        }}
       />
       <Text fontSize="sm" fontWeight="bold" textTransform="uppercase">
         Data
