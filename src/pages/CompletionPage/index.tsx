@@ -199,7 +199,7 @@ function Certificate({
       return;
     }
 
-    const fontPath = `${document.URL.startsWith('https') ? 'https://' : 'http://'}${document.location.host}/fonts/parisienne-latin-400-normal.woff2`;
+    const fontPath = `${document.URL.startsWith('https') ? 'https://' : 'http://'}${document.location.host}${import.meta.env.BASE_URL}/fonts/parisienne-latin-400-normal.woff2`;
     const fontParisienne = new FontFace('Parisienne', `url(${fontPath})`);
 
     document.fonts.add(fontParisienne);
