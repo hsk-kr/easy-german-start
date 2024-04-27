@@ -6,11 +6,14 @@ import ThirdImage from './res/c.webp';
 import FourthImage from './res/d.webp';
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
+import { Lesson } from '../../types/lesson';
+import MatchGame from '../../components/MatchGame';
 
 function HomePage() {
   return (
     <DefaultTemplate disablePadding>
-      <Entry />
+      <EntrySection />
+      {/* <DemoSection /> */}
       <Padding />
       <Padding />
     </DefaultTemplate>
@@ -28,7 +31,7 @@ const ImageRow = styled(Flex)`
   }
 `;
 
-function Entry() {
+function EntrySection() {
   const imgs = [FirstImage, SecondImage, ThirdImage, FourthImage];
   const [imgIndices, setImgIndices] = useState([0, 1, 2, 3]);
   const [animImgIndex, setAnimImgIndex] = useState(-1);
@@ -137,6 +140,32 @@ function Entry() {
         Don't Study, Enjoy It
       </Text>
     </Flex>
+  );
+}
+
+function DemoSection() {
+  const lesson: Lesson = {
+    lessonTitle: 'title',
+    lessonDesc: 'desc',
+    words: [
+      {
+        word: 'Hallo',
+        desc: 'Hello',
+        examples: [
+          {
+            sentence: 'Hallo',
+            translation: 'Hello',
+          },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <Box height="240px">
+      <Text fontSize="xxx-large">Try</Text>
+      <MatchGame noGuide lesson={lesson} onClear={() => alert('test')} />
+    </Box>
   );
 }
 

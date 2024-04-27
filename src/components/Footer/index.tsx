@@ -4,9 +4,16 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <Box w="100%" color="white" bgColor="blackAlpha.600" fontSize="small">
-      <Container p={2} maxW="container.lg">
+    <Box
+      w="100%"
+      h={['96px', '48px']}
+      color="white"
+      bgColor="blackAlpha.600"
+      fontSize="small"
+    >
+      <Container p={2} maxW="container.lg" height="100%">
         <Flex
+          height="100%"
           alignItems="center"
           flexDirection={{
             base: 'column',

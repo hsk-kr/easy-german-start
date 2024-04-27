@@ -17,6 +17,7 @@ import useHistory from '../../hooks/useHistory';
 import dayjs from 'dayjs';
 import { History } from '../../types/history';
 import FullscreenLoading from '../../components/FullscreenLoading';
+import { fullHeightInsideTemplate } from '../../libs/const';
 
 let fontLoaded = false;
 
@@ -84,7 +85,7 @@ function CompletionPage() {
   return (
     <DefaultTemplate disablePadding bgGreen>
       <FullscreenLoading useRandomInitialLoadingTime visible={loading} />
-      <Box bgColor="green.500" minH="100svh">
+      <Box bgColor="green.500" minH={fullHeightInsideTemplate}>
         {!loading && (
           <Container maxW="container.md" p={4} pt={[4, 12]}>
             <Flex flexDir="column" gap={8}>

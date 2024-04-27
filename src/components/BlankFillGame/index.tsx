@@ -43,7 +43,7 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
   const progress = Math.floor((currentWordIdx / words.length) * 100);
 
   return (
-    <Box bgColor="green.500" minH="100svh">
+    <Box bgColor="green.500" h="100%">
       <Shortcut />
       <Guide
         message={

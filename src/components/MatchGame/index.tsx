@@ -8,6 +8,7 @@ import useScreen from '../../hooks/useScreen';
 import useTTS from '../../hooks/useTTS';
 
 interface MatchGameProps {
+  noGuide?: boolean;
   lesson: Lesson;
   onClear: VoidFunction;
 }
@@ -21,7 +22,7 @@ const keyMapping = {
   right: ['a', 's', 'd', 'f', 'g'],
 };
 
-const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
+const MatchGame = ({ lesson, onClear, noGuide }: MatchGameProps) => {
   const [words, setWords] = useState<Word[][]>([]);
   const [round, setRound] = useState(-1);
   const currentRoundWordPairs = useMemo<{ left: Word[]; right: Word[] }>(() => {
@@ -82,8 +83,10 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   if (round === -1) return <div>Loading...</div>;
 
   return (
-    <Box bgColor="green.500" minH="100svh">
-      <Guide message="Match the word with the correct description!" />
+    <Box bgColor="green.500" h="100%">
+      {!noGuide && (
+        <Guide message="Match the word with the correct description!" />
+      )}
       <Container maxW="container.md" pt={[4, 16]} p={4}>
         <WordPairs
           left={currentRoundWordPairs.left}

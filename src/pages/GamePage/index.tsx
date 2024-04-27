@@ -8,8 +8,14 @@ import GetLessonFromParams from '../../components/GetLessonFromParams';
 import { Lesson } from '../../types/lesson';
 import useHistory from '../../hooks/useHistory';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
+import { fullHeightInsideTemplate } from '../../libs/const';
 
-const GamePage = () => {
+interface GamePageProps {
+  skipGame?: boolean;
+}
+
+const GamePage = ({ skipGame }: GamePageProps) => {
   const [stage, setStage] = useState(0);
   const [currentLesson, setCurrentLesson] = useState<Lesson | undefined>(
     undefined
@@ -42,23 +48,7 @@ const GamePage = () => {
     }
   }, [currentLesson, stage]);
 
-  // complete the lesson without playing for test purpos
-  // useEffect(() => {
-  //   if (!currentLesson) return;
-  //   addHistory({
-  //     lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
-  //     lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
-  //     completedDate: dayjs.utc().toString(),
-  //     sectionIndex: indices.section,
-  //     lessonIndex: indices.lesson,
-  //   });
-  //   navigate(`/completion`);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [currentLesson]);
-
-  useEffect(() => {
-    if (stage < 3) return;
-
+  const completeAndNavigate = () => {
     addHistory({
       lessonTitle: currentLesson?.lessonTitle ?? 'Something went wrong',
       lessonDesc: currentLesson?.lessonDesc ?? 'Something went wrong',
@@ -67,6 +57,19 @@ const GamePage = () => {
       lessonIndex: indices.lesson,
     });
     navigate(`/completion`);
+  };
+
+  // complete the lesson without playing for test purpose
+  useEffect(() => {
+    if (!skipGame || !currentLesson) return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    completeAndNavigate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLesson]);
+
+  useEffect(() => {
+    if (stage < 3) return;
+    completeAndNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage]);
 
@@ -78,7 +81,7 @@ const GamePage = () => {
           setIndices({ section: sectionIndex, lesson: lessonIndex });
         }}
       />
-      {game}
+      <Box minH={fullHeightInsideTemplate}>{game}</Box>
     </DefaultTemplate>
   );
 };
