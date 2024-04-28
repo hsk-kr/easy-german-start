@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import Guide from '../Guide';
 import useScreen from '../../hooks/useScreen';
 import useTTS from '../../hooks/useTTS';
+import { shuffleArray } from '../../libs/array';
 
 interface TranslationPuzzleGameProps {
   lesson: Lesson;
@@ -178,17 +179,11 @@ const Puzzle = ({
         word,
         hidden: true,
       }));
-      const newPuzzles: typeof puzzles = newWords.map((w) => ({
-        word: w.word,
-      }));
-
-      const shufflePuzzles = () => {
-        for (let i = 0; i < newPuzzles.length; i++) {
-          const randIdx = Math.floor(Math.random() * newPuzzles.length);
-          newPuzzles.splice(randIdx, 0, newPuzzles.splice(i, 1)[0]);
-        }
-      };
-      shufflePuzzles();
+      const newPuzzles: typeof puzzles = shuffleArray(
+        newWords.map((w) => ({
+          word: w.word,
+        }))
+      );
 
       setWords(newWords);
       setPuzzles(newPuzzles);
@@ -274,6 +269,8 @@ const TranslationPuzzleGame = ({
           .fill(0)
           .map((_, idx) => idx);
 
+        // pick random indices as many times as NUM_RAND_EXAMPLES
+        // since it splice the picked index from the indices, they won't be duplicated.
         while (pickedIndices.length < NUM_RAND_EXAMPLES && indices.length > 0) {
           const randIdx = Math.floor(Math.random() * indices.length);
           pickedIndices.push(indices.splice(randIdx, 1)[0]);

@@ -6,6 +6,7 @@ import Guide from '../Guide';
 import { Lesson } from '../../types/lesson';
 import useScreen from '../../hooks/useScreen';
 import useTTS from '../../hooks/useTTS';
+import { shuffleArray } from '../../libs/array';
 
 interface MatchGameProps {
   noGuide?: boolean;
@@ -32,15 +33,7 @@ const MatchGame = ({ lesson, onClear, noGuide }: MatchGameProps) => {
       return { left: [], right: [] };
 
     const getRandomWords = () => {
-      const remainWords = [...words[round]];
-      const randomWords: Word[] = [];
-
-      while (remainWords.length > 0) {
-        const randomIdx = Math.floor(Math.random() * remainWords.length);
-        randomWords.push({ ...remainWords.splice(randomIdx, 1)[0] });
-      }
-
-      return randomWords;
+      return shuffleArray([...words[round]]);
     };
 
     return {

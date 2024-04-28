@@ -5,6 +5,7 @@ import { Lesson } from '../../types/lesson';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import useScreen from '../../hooks/useScreen';
 import Guide from '../Guide';
+import { shuffleArray } from '../../libs/array';
 
 interface BlankFillGameProps {
   lesson: Lesson;
@@ -28,13 +29,7 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
   };
 
   useEffect(() => {
-    const remainingWords = [...lesson.words];
-    const randomWords = [];
-
-    while (remainingWords.length > 0) {
-      const randomIdx = Math.floor(Math.random() * remainingWords.length);
-      randomWords.push({ ...remainingWords.splice(randomIdx, 1)[0] });
-    }
+    const randomWords = shuffleArray([...lesson.words]);
 
     setWords(randomWords);
     setCurrentWordIdx(randomWords.length > 0 ? 0 : -1);
@@ -117,18 +112,18 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
       hidden: boolean;
     }[]
   >([]);
-  const [fillingLetters, setFillingLetters] = useState<
+  const [letterOptions, setLetterOptions] = useState<
     {
       letter: string;
       index: number;
     }[]
   >([]);
   const [selectedLetter, setSelectedLetter] = useState<
-    (typeof fillingLetters)[0] | null
+    (typeof letterOptions)[0] | null
   >(null);
   const { isDesktop } = useScreen();
   const isHovable = isDesktop;
-  const isClear = letters.length > 0 && fillingLetters.length === 0;
+  const isClear = letters.length > 0 && letterOptions.length === 0;
   const nextGuessingIdx = useMemo(
     () => letters.findIndex((l) => l.hidden),
     [letters]
@@ -162,9 +157,9 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
   const filllingLetterComps = useMemo(() => {
     const comps: ReactNode[] = [];
 
-    for (let i = 0; i < fillingLetters.length; i++) {
-      const fl = fillingLetters[i];
-      const incorrect = selectedLetter === fillingLetters[i];
+    for (let i = 0; i < letterOptions.length; i++) {
+      const fl = letterOptions[i];
+      const incorrect = selectedLetter === letterOptions[i];
       let className = `filling-letter ${fl.letter} `;
       if (incorrect) className += 'anim-incorrect-letter';
 
@@ -199,7 +194,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
     }
 
     return comps;
-  }, [fillingLetters, isHovable, selectedLetter]);
+  }, [letterOptions, isHovable, selectedLetter]);
 
   const generateLettersFromWord = (word: string) => {
     const hiddenLetterIndicies = Array(word.length)
@@ -213,7 +208,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
       hiddenLetterIndicies.splice(randIdx, 1);
     }
 
-    const newFillingLetters = hiddenLetterIndicies.map((index) => ({
+    const newLetterOptions = hiddenLetterIndicies.map((index) => ({
       letter: word[index],
       index,
     }));
@@ -232,7 +227,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
 
     return {
       letters: newLetters,
-      fillingLetters: newFillingLetters,
+      letterOptions: shuffleArray(newLetterOptions),
     };
   };
 
@@ -241,8 +236,8 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
     if (nextLetterToFill && nextLetterToFill.letter !== fillingLetter.letter)
       return;
 
-    setFillingLetters((prevFillingLetters) =>
-      prevFillingLetters.filter((l) => l.index !== fillingLetter.index)
+    setLetterOptions((prevLetterOptions) =>
+      prevLetterOptions.filter((l) => l.index !== fillingLetter.index)
     );
     setLetters((prevLetter) =>
       prevLetter.map((l) => {
@@ -257,12 +252,12 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
     );
   };
 
-  // initialize letters and fillingLetters
+  // initialize letters and letterOptions
   useEffect(() => {
     if (!word) return;
-    const { letters, fillingLetters } = generateLettersFromWord(word);
+    const { letters, letterOptions } = generateLettersFromWord(word);
     setLetters(letters);
-    setFillingLetters(fillingLetters);
+    setLetterOptions(letterOptions);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
 
