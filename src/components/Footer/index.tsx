@@ -28,7 +28,10 @@ function Footer() {
           <Text align="center">
             Easy Start German - Unsure Where To Begin? Simply Solve Quizzes!
           </Text>
-          <Link to="https://github.com/hsk-kr" target="_blank">
+          <Link
+            to="https://github.com/hsk-kr/easy-german-start"
+            target="_blank"
+          >
             <Flex alignItems="center" columnGap={2}>
               <FaGithub />
               <Text>hsk-kr • hsk.coder@gmail.com</Text>

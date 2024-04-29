@@ -273,7 +273,6 @@ const Card = ({
   const bgColor = active ? 'blue.500' : 'white';
   const color = active ? 'white' : 'black';
   const p = active ? 2 : 4;
-  const height = active ? '44px' : '60px';
 
   useEffect(() => {
     // when the status is changed to `incorrect`, the animation will start once.
@@ -282,67 +281,58 @@ const Card = ({
   }, [status]);
 
   return (
-    <Flex
-      height="60px"
-      alignItems="center"
+    <Box
+      id={getCardIdWithShortcut(shortcut)}
+      onAnimationEnd={() => {
+        setIncorrectAnim(false);
+        onIncorrectAnimEnd();
+      }}
+      position="relative"
+      className={incorrectAnim ? 'anim-incorrect-answer' : ''}
+      p={p}
+      minWidth="120px"
+      maxWidth="40%"
+      bgColor={bgColor}
+      color={color}
+      borderRadius="lg"
+      fontSize={fontSize}
+      textAlign="center"
+      cursor="pointer"
+      transition="all 0.25s"
+      onClick={incorrectAnim ? undefined : onSelect}
       _hover={
         isHovable
           ? {
-              '>div': {
-                bgColor: 'blue.500',
-                color: 'white',
-                fontWeight: 'bold',
-                p: 2,
-                height: '44px',
-                ['> .shortcut']: {
-                  display: 'none',
-                },
+              bgColor: 'blue.500',
+              color: 'white',
+              fontWeight: 'bold',
+              p: 2,
+              ['> .shortcut']: {
+                display: 'none',
               },
             }
           : undefined
       }
     >
+      {value}
       <Box
-        id={getCardIdWithShortcut(shortcut)}
-        onAnimationEnd={() => {
-          setIncorrectAnim(false);
-          onIncorrectAnimEnd();
-        }}
-        position="relative"
-        className={incorrectAnim ? 'anim-incorrect-answer' : ''}
-        p={p}
-        minWidth="120px"
-        maxWidth="40%"
-        bgColor={bgColor}
-        color={color}
-        borderRadius="lg"
-        fontSize={fontSize}
-        textAlign="center"
-        cursor="pointer"
-        transition="all 0.25s"
-        height={height}
-        onClick={incorrectAnim ? undefined : onSelect}
+        className="shortcut"
+        position="absolute"
+        display={active || incorrectAnim ? 'none' : ['none', 'none', 'block']}
+        left="0%"
+        top="0"
+        transform="translate(0%,-50%)"
+        textTransform="capitalize"
+        px={2}
+        py={1}
+        borderRadius="md"
+        bg="gray.200"
       >
-        {value}
-        <Box
-          className="shortcut"
-          position="absolute"
-          display={active || incorrectAnim ? 'none' : ['none', 'none', 'block']}
-          left="0%"
-          top="0"
-          transform="translate(0%,-50%)"
-          textTransform="capitalize"
-          px={2}
-          py={1}
-          borderRadius="md"
-          bg="gray.200"
-        >
-          <Text fontSize="sm" color="black" fontWeight="bold">
-            {shortcut}
-          </Text>
-        </Box>
+        <Text fontSize="sm" color="black" fontWeight="bold">
+          {shortcut}
+        </Text>
       </Box>
-    </Flex>
+    </Box>
   );
 };
 

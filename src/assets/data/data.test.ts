@@ -77,9 +77,6 @@ describe('Validate mostCommon1000Words', () => {
 
     it('should have 10 words.', () => {
       for (const lesson of getLessons()) {
-        if (lesson.words.length !== 10) {
-          console.log(lesson);
-        }
         expect(lesson.words).length(10);
       }
     });

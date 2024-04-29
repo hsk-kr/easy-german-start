@@ -66,11 +66,12 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
 
       if (!same) {
         // today can be ignored but doneToday will be false.
-        if (i === h.length - 1) {
+        if (today === cur) {
           cur = cur.subtract(1, 'day');
           i++;
           continue;
         } else {
+          console.log('fuck');
           break;
         }
       } else {

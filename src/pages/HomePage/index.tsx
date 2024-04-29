@@ -1,4 +1,17 @@
-import { Box, Button, Container, Flex, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  StackDivider,
+  Text,
+} from '@chakra-ui/react';
 import DefaultTemplate from '../../components/DefaultTemplate';
 import FirstImage from './res/a.webp';
 import SecondImage from './res/b.webp';
@@ -14,6 +27,9 @@ import BlankFillGame from '../../components/BlankFillGame';
 import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
 import Certificate from '../../components/Certiicate';
 import dayjs from 'dayjs';
+import DataLoader from '../../components/DataLoader';
+import { FaGithub, FaQuestion } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -21,7 +37,8 @@ function HomePage() {
       <EntrySection />
       <IntroSection />
       <DemoSection />
-      <Padding />
+      <DataLoaderGuide />
+      <ContributionGuide />
     </DefaultTemplate>
   );
 }
@@ -160,7 +177,6 @@ function IntroSection() {
     const animFuncQueue: VoidFunction[] = [];
 
     const executeAnimFuncFromQueue = () => {
-      console.log(animFuncQueue);
       if (animFuncQueue.length <= 0 || animating) return;
       animating = true;
       animFuncQueue.shift()?.();
@@ -369,11 +385,109 @@ function DemoSection() {
     }
   }, [lesson, screenStep]);
 
-  return <Box h={screenStep === 0 ? '30svh' : '90svh'}>{screen}</Box>;
+  let h = screenStep === 0 ? '30svh' : '90svh';
+  h = screenStep === 4 ? 'fit-content' : h;
+
+  return <Box h={h}>{screen}</Box>;
 }
 
-function Padding() {
-  return <Box bg="white" minH="100svh"></Box>;
+function DataLoaderGuide() {
+  return (
+    <Box bg="#ececec">
+      <Container maxW="container.md" p={[4, 8, 16]}>
+        <Card>
+          <CardHeader>
+            <Heading size="md">How To Restore Data</Heading>
+            <Text pt="2" pb="2">
+              You can find this feature on the profile page
+            </Text>
+            <DataLoader />
+          </CardHeader>
+          <CardBody>
+            <Stack divider={<StackDivider />} spacing="4">
+              <Box>
+                <Heading size="xs" textTransform="uppercase">
+                  Import
+                </Heading>
+                <Text pt="2" fontSize="sm">
+                  Open the exported JSON file to replace the current data with
+                  the file's contents.
+                </Text>
+              </Box>
+              <Box>
+                <Heading size="xs" textTransform="uppercase">
+                  Export
+                </Heading>
+                <Text pt="2" fontSize="sm">
+                  Save the JSON file to your device for data storage.
+                </Text>
+              </Box>
+              <Box>
+                <Heading size="xs" textTransform="uppercase">
+                  Reset
+                </Heading>
+                <Text pt="2" fontSize="sm">
+                  This action permanently deletes all current data. Please note
+                  that it cannot be undone.
+                </Text>
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
+      </Container>
+    </Box>
+  );
+}
+
+function ContributionGuide() {
+  const listItems = [
+    'Did you find any typos?',
+    'Is there something wrong with the questions?',
+    'Have you encountered any issues with the app?',
+    'Do you have any ideas for improving the service?',
+    'Just want to share something something?',
+  ];
+
+  return (
+    <Container maxW="container.md" p={[4, 8, 16]}>
+      <Flex flexDir="column" gap={[1, 2, 4]}>
+        {listItems.map((item, idx) => (
+          <Flex
+            key={idx}
+            columnGap={4}
+            fontSize={[14, 18, 24]}
+            alignItems="center"
+          >
+            <FaQuestion color="red" />
+            {item}
+          </Flex>
+        ))}
+      </Flex>
+      <Flex flexDir="column" alignItems="center" pt={[2, 4, 8]} gap={[2, 4]}>
+        <Text
+          textAlign="center"
+          fontSize={['small', 'large', 'x-large']}
+          borderBottom="2px solid #ccc"
+          pb={2}
+        >
+          Be part of our community and share your thoughts with us!
+        </Text>
+        <Link
+          to="https://github.com/hsk-kr/easy-german-start/issues"
+          target="_blank"
+        >
+          <Button
+            size={['sm', 'md', 'lg']}
+            leftIcon={<FaGithub />}
+            colorScheme="teal"
+            variant="solid"
+          >
+            Github Issues
+          </Button>
+        </Link>
+      </Flex>
+    </Container>
+  );
 }
 
 export default HomePage;
