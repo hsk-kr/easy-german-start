@@ -6,6 +6,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import useScreen from '../../hooks/useScreen';
 import Guide from '../Guide';
 import { shuffleArray } from '../../libs/array';
+import useTTS from '../../hooks/useTTS';
 
 interface BlankFillGameProps {
   lesson: Lesson;
@@ -17,8 +18,10 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
   const [currentWordIdx, setCurrentWordIdx] = useState(-1);
   const currentWord = currentWordIdx === -1 ? undefined : words[currentWordIdx];
   const { isDesktop } = useScreen();
+  const { speak } = useTTS({ useRandomVoice: true });
 
   const handleGameOneStageClear = () => {
+    speak(words[currentWordIdx].word);
     const nextWordIdx = currentWordIdx + 1;
     if (nextWordIdx === words.length) {
       onClear();
@@ -124,6 +127,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
   const { isDesktop } = useScreen();
   const isHovable = isDesktop;
   const isClear = letters.length > 0 && letterOptions.length === 0;
+
   const nextGuessingIdx = useMemo(
     () => letters.findIndex((l) => l.hidden),
     [letters]
@@ -154,7 +158,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
 
     return comps;
   }, [letters, nextGuessingIdx]);
-  const filllingLetterComps = useMemo(() => {
+  const letterOptionComps = useMemo(() => {
     const comps: ReactNode[] = [];
 
     for (let i = 0; i < letterOptions.length; i++) {
@@ -281,7 +285,7 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
         {letterComps}
       </Flex>
       <Flex justifyContent="center" alignItems="center" gap={4} flexWrap="wrap">
-        {filllingLetterComps}
+        {letterOptionComps}
       </Flex>
     </Flex>
   );

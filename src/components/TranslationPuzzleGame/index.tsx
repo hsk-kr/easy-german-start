@@ -67,7 +67,7 @@ const Puzzle = ({
   const [errorPuzzleIndex, setErrorPuzzleIndex] = useState(-1)!;
   const isClear = words.every((w) => !w.hidden);
   const { isDesktop } = useScreen();
-  const { speak } = useTTS();
+  const { speak } = useTTS({ useRandomVoice: true });
   const wordComps = useMemo(() => {
     const comps: ReactNode[] = [];
     const disableTransition = words.every((w) => w.hidden);

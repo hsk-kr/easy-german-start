@@ -9,7 +9,6 @@ import useTTS from '../../hooks/useTTS';
 import { shuffleArray } from '../../libs/array';
 
 interface MatchGameProps {
-  noGuide?: boolean;
   lesson: Lesson;
   onClear: VoidFunction;
 }
@@ -23,7 +22,7 @@ const keyMapping = {
   right: ['a', 's', 'd', 'f', 'g'],
 };
 
-const MatchGame = ({ lesson, onClear, noGuide }: MatchGameProps) => {
+const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   const [words, setWords] = useState<Word[][]>([]);
   const [round, setRound] = useState(-1);
   const currentRoundWordPairs = useMemo<{ left: Word[]; right: Word[] }>(() => {
@@ -77,9 +76,7 @@ const MatchGame = ({ lesson, onClear, noGuide }: MatchGameProps) => {
 
   return (
     <Box bgColor="green.500" h="100%">
-      {!noGuide && (
-        <Guide message="Match the word with the correct description!" />
-      )}
+      <Guide message="Match the word with the correct description!" />
       <Container maxW="container.md" pt={[4, 16]} p={4}>
         <WordPairs
           left={currentRoundWordPairs.left}
@@ -116,7 +113,7 @@ const WordPairs = ({
     left: -1,
     right: -1,
   });
-  const { speak } = useTTS();
+  const { speak } = useTTS({ useRandomVoice: true });
 
   const resetPrevIncorrectIndicies = useCallback(() => {
     setPrevIncorrectIndices({
@@ -276,6 +273,7 @@ const Card = ({
   const bgColor = active ? 'blue.500' : 'white';
   const color = active ? 'white' : 'black';
   const p = active ? 2 : 4;
+  const height = active ? '44px' : '60px';
 
   useEffect(() => {
     // when the status is changed to `incorrect`, the animation will start once.
@@ -284,58 +282,67 @@ const Card = ({
   }, [status]);
 
   return (
-    <Box
-      id={getCardIdWithShortcut(shortcut)}
-      onAnimationEnd={() => {
-        setIncorrectAnim(false);
-        onIncorrectAnimEnd();
-      }}
-      position="relative"
-      className={incorrectAnim ? 'anim-incorrect-answer' : ''}
-      p={p}
-      minWidth="120px"
-      maxWidth="40%"
-      bgColor={bgColor}
-      color={color}
-      borderRadius="lg"
-      fontSize={fontSize}
-      textAlign="center"
-      cursor="pointer"
-      transition="all 0.25s"
+    <Flex
+      height="60px"
+      alignItems="center"
       _hover={
         isHovable
           ? {
-              bgColor: 'blue.500',
-              color: 'white',
-              fontWeight: 'bold',
-              p: 2,
-              ['> .shortcut']: {
-                display: 'none',
+              '>div': {
+                bgColor: 'blue.500',
+                color: 'white',
+                fontWeight: 'bold',
+                p: 2,
+                height: '44px',
+                ['> .shortcut']: {
+                  display: 'none',
+                },
               },
             }
           : undefined
       }
-      onClick={incorrectAnim ? undefined : onSelect}
     >
-      {value}
       <Box
-        className="shortcut"
-        position="absolute"
-        display={active || incorrectAnim ? 'none' : ['none', 'none', 'block']}
-        left="0%"
-        top="0"
-        transform="translate(0%,-50%)"
-        textTransform="capitalize"
-        px={2}
-        py={1}
-        borderRadius="md"
-        bg="gray.200"
+        id={getCardIdWithShortcut(shortcut)}
+        onAnimationEnd={() => {
+          setIncorrectAnim(false);
+          onIncorrectAnimEnd();
+        }}
+        position="relative"
+        className={incorrectAnim ? 'anim-incorrect-answer' : ''}
+        p={p}
+        minWidth="120px"
+        maxWidth="40%"
+        bgColor={bgColor}
+        color={color}
+        borderRadius="lg"
+        fontSize={fontSize}
+        textAlign="center"
+        cursor="pointer"
+        transition="all 0.25s"
+        height={height}
+        onClick={incorrectAnim ? undefined : onSelect}
       >
-        <Text fontSize="sm" color="black" fontWeight="bold">
-          {shortcut}
-        </Text>
+        {value}
+        <Box
+          className="shortcut"
+          position="absolute"
+          display={active || incorrectAnim ? 'none' : ['none', 'none', 'block']}
+          left="0%"
+          top="0"
+          transform="translate(0%,-50%)"
+          textTransform="capitalize"
+          px={2}
+          py={1}
+          borderRadius="md"
+          bg="gray.200"
+        >
+          <Text fontSize="sm" color="black" fontWeight="bold">
+            {shortcut}
+          </Text>
+        </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

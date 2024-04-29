@@ -1,3 +1,25 @@
+@keyframes slide-left-to-right {
+  from {
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  to {
+    transform: translateX(0%);
+    visibility: visible;
+  }
+}
+
+@keyframes slide-right-to-left {
+  from {
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  to {
+    transform: translateX(0%);
+    visibility: visible;
+  }
+}
+
 @keyframes entry-image-change {
   from {
     filter: blur(8px);
@@ -100,5 +122,17 @@
 .anim-entry-image-change {
   animation-name: entry-image-change;
   animation-duration: 2s;
+  animation-timing-function: linear;
+}
+
+.anim-slide-left-to-right {
+  animation-name: slide-left-to-right;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+}
+
+.anim-slide-right-to-left {
+  animation-name: slide-right-to-left;
+  animation-duration: 0.5s;
   animation-timing-function: linear;
 }

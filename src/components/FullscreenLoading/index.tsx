@@ -19,7 +19,7 @@ const FullscreenLoading = ({
    * even though there is an unncessary time users can't interact with UI
    **/
   useEffect(() => {
-    const delay = 1000 + Math.random() * 1000;
+    const delay = 500 + Math.random() * 500;
     const tmDelay = setTimeout(() => {
       setIntentionalLoading(false);
     }, delay);
