@@ -1,8 +1,6 @@
 # Easy German Start
 
-It's still under develpoment.
-
-[Preview](https://hsk-kr.github.io/easy-german-start/)
+[Website](https://hsk-kr.github.io/easy-german-start/)
 
 ---
 
