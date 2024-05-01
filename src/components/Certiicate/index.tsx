@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import useImage from '../../hooks/useImage';
 import useScreen from '../../hooks/useScreen';
 import dayjs from 'dayjs';
+import { downloadURIAsFile } from '../../libs/file';
 
 let fontLoaded = false;
 
@@ -58,20 +59,9 @@ const Certificate = ({
   const downloadCertificate = () => {
     if (!stageRef.current) return;
 
-    const downloadURI = (uri: string, name: string) => {
-      const link = document.createElement('a');
-      link.download = name;
-      link.href = uri;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      link.remove();
-    };
-
+    const filename = `certificate${date.replace(/\./, '_')}.png`;
     const dataURL = stageRef.current.toDataURL({ pixelRatio: 1 });
-    downloadURI(dataURL, `certificate${date.replace(/\./, '_')}.png`);
-
-    stageRef.current.toImage();
+    downloadURIAsFile(filename, dataURL, { revokeURI: true });
   };
 
   useEffect(() => {

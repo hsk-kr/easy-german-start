@@ -2,6 +2,7 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { ChangeEvent, useRef } from 'react';
 import useHistory from '../../hooks/useHistory';
+import { downloadURIAsFile } from '../../libs/file';
 
 const DataLoader = () => {
   const { getHistories, setHistories, clearHistories } = useHistory();
@@ -41,19 +42,9 @@ const DataLoader = () => {
   const exportData = () => {
     const histories = JSON.stringify(getHistories());
     const filename = `${dayjs().utc().format('YYYYMMDD')}_easygermanstart.json`;
-    const a = document.createElement('a');
-    const contents = URL.createObjectURL(new Blob([histories]));
+    const historiesFileURL = URL.createObjectURL(new Blob([histories]));
 
-    a.href = contents;
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-    URL.revokeObjectURL(contents);
-
-    a.remove();
+    downloadURIAsFile(filename, historiesFileURL, { revokeURI: true });
   };
 
   const reset = () => {
