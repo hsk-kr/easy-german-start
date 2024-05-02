@@ -2,7 +2,7 @@
 
 import { Box, Container, Text, Flex, Progress } from '@chakra-ui/react';
 import { Lesson } from '../../types/lesson';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useScreen from '../../hooks/useScreen';
 import Guide from '../Guide';
 import { shuffleArray } from '../../libs/array';
@@ -11,6 +11,16 @@ import useTTS from '../../hooks/useTTS';
 interface BlankFillGameProps {
   lesson: Lesson;
   onClear: VoidFunction;
+}
+
+interface GuessingLetter {
+  letter: string;
+  hidden: boolean;
+}
+
+interface LetterChoice {
+  letter: string;
+  index: number;
 }
 
 const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
@@ -47,7 +57,7 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
         message={
           isDesktop
             ? [
-                'Select letters in the right order!',
+                'Select letter in the right order!',
                 'You can type with your keyboard - Ctrl + English for German Letter',
               ]
             : 'Select letters in the right order!'
@@ -109,98 +119,21 @@ const Shortcut = () => {
 };
 
 const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
-  const [letters, setLetters] = useState<
-    {
-      letter: string;
-      hidden: boolean;
-    }[]
-  >([]);
-  const [letterOptions, setLetterOptions] = useState<
-    {
-      letter: string;
-      index: number;
-    }[]
-  >([]);
+  const [guessingLetters, setGuessingLetters] = useState<GuessingLetter[]>([]);
+  const [letterChoices, setLetterChoices] = useState<LetterChoice[]>([]);
   const [selectedLetter, setSelectedLetter] = useState<
-    (typeof letterOptions)[0] | null
+    (typeof letterChoices)[0] | null
   >(null);
   const { isDesktop } = useScreen();
   const isHovable = isDesktop;
-  const isClear = letters.length > 0 && letterOptions.length === 0;
+  const isClear = guessingLetters.length > 0 && letterChoices.length === 0;
 
   const nextGuessingIdx = useMemo(
-    () => letters.findIndex((l) => l.hidden),
-    [letters]
+    () => guessingLetters.findIndex((l) => l.hidden),
+    [guessingLetters]
   );
-  const letterComps = useMemo(() => {
-    const comps: ReactNode[] = [];
 
-    for (let i = 0; i < letters.length; i++) {
-      const isNextGuessingLetter = nextGuessingIdx === i;
-
-      comps.push(
-        <Text
-          key={i}
-          w={12}
-          borderBottom="1px solid white"
-          borderWidth={isNextGuessingLetter ? 4 : 2}
-          color="white"
-          fontWeight="bold"
-          fontSize="4xl"
-          textAlign="center"
-          p={2}
-          className={isNextGuessingLetter ? 'anim-target-letter' : ''}
-        >
-          {letters[i].hidden ? '-' : letters[i].letter}
-        </Text>
-      );
-    }
-
-    return comps;
-  }, [letters, nextGuessingIdx]);
-  const letterOptionComps = useMemo(() => {
-    const comps: ReactNode[] = [];
-
-    for (let i = 0; i < letterOptions.length; i++) {
-      const fl = letterOptions[i];
-      const incorrect = selectedLetter === letterOptions[i];
-      let className = `filling-letter ${fl.letter} `;
-      if (incorrect) className += 'anim-incorrect-letter';
-
-      comps.push(
-        <Text
-          key={i}
-          w={12}
-          h={12}
-          fontSize="3xl"
-          textAlign="center"
-          color="white"
-          fontWeight="bold"
-          borderBottom="4px solid white"
-          transition="0.5s all"
-          cursor="pointer"
-          borderColor={incorrect ? 'red.500' : undefined}
-          className={className}
-          _hover={
-            isHovable
-              ? {
-                  transform: 'scale(1.1)',
-                }
-              : undefined
-          }
-          onClick={() => {
-            setSelectedLetter(fl);
-          }}
-        >
-          {fl.letter}
-        </Text>
-      );
-    }
-
-    return comps;
-  }, [letterOptions, isHovable, selectedLetter]);
-
-  const generateLettersFromWord = (word: string) => {
+  const generateGuessingLettersFromWord = (word: string) => {
     const hiddenLetterIndicies = Array(word.length)
       .fill(0)
       .map((_, i) => i);
@@ -216,34 +149,34 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
       letter: word[index],
       index,
     }));
-    const newLetters: typeof letters = [];
+    const newGuessingLetters: typeof guessingLetters = [];
 
     for (let i = 0; i < word.length; i++) {
       const hidden =
         hiddenLetterIndicies.length > 0 && hiddenLetterIndicies[0] === i;
       if (hidden) hiddenLetterIndicies.shift();
 
-      newLetters.push({
+      newGuessingLetters.push({
         letter: word[i],
         hidden,
       });
     }
 
     return {
-      letters: newLetters,
-      letterOptions: shuffleArray(newLetterOptions),
+      guessingLetters: newGuessingLetters,
+      letterChoices: shuffleArray(newLetterOptions),
     };
   };
 
   const fillLetter = (fillingLetter: NonNullable<typeof selectedLetter>) => {
-    const nextLetterToFill = letters.find((l) => l.hidden);
+    const nextLetterToFill = guessingLetters.find((l) => l.hidden);
     if (nextLetterToFill && nextLetterToFill.letter !== fillingLetter.letter)
       return;
 
-    setLetterOptions((prevLetterOptions) =>
+    setLetterChoices((prevLetterOptions) =>
       prevLetterOptions.filter((l) => l.index !== fillingLetter.index)
     );
-    setLetters((prevLetter) =>
+    setGuessingLetters((prevLetter) =>
       prevLetter.map((l) => {
         if (l === nextLetterToFill) {
           return {
@@ -256,12 +189,13 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
     );
   };
 
-  // initialize letters and letterOptions
+  // initialize guessingLetters and letterChoices
   useEffect(() => {
     if (!word) return;
-    const { letters, letterOptions } = generateLettersFromWord(word);
-    setLetters(letters);
-    setLetterOptions(letterOptions);
+    const { guessingLetters, letterChoices } =
+      generateGuessingLettersFromWord(word);
+    setGuessingLetters(guessingLetters);
+    setLetterChoices(letterChoices);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
 
@@ -282,13 +216,99 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
   return (
     <Flex flexDir="column" gap={6}>
       <Flex justifyContent="center" alignItems="center" gap={4} flexWrap="wrap">
-        {letterComps}
+        <GuessingLetters
+          guessingLetters={guessingLetters}
+          nextGuessingIdx={nextGuessingIdx}
+        />
       </Flex>
       <Flex justifyContent="center" alignItems="center" gap={4} flexWrap="wrap">
-        {letterOptionComps}
+        <LetterChoices
+          isHovable={isHovable}
+          letterChoices={letterChoices}
+          onLetterChoiceClick={(letterChoice) =>
+            setSelectedLetter(letterChoice)
+          }
+          selectedLetter={selectedLetter}
+        />
       </Flex>
     </Flex>
   );
+};
+
+const GuessingLetters = ({
+  guessingLetters,
+  nextGuessingIdx,
+}: {
+  guessingLetters: GuessingLetter[];
+  nextGuessingIdx: number;
+}) => {
+  return guessingLetters.map((guessingLetter, idx) => {
+    const isNextGuessingLetter = nextGuessingIdx === idx;
+
+    return (
+      <Text
+        key={idx}
+        w={12}
+        borderBottom="1px solid white"
+        borderWidth={isNextGuessingLetter ? 4 : 2}
+        color="white"
+        fontWeight="bold"
+        fontSize="4xl"
+        textAlign="center"
+        p={2}
+        className={isNextGuessingLetter ? 'anim-target-letter' : ''}
+      >
+        {guessingLetter.hidden ? '-' : guessingLetter.letter}
+      </Text>
+    );
+  });
+};
+
+const LetterChoices = ({
+  letterChoices,
+  selectedLetter,
+  isHovable,
+  onLetterChoiceClick,
+}: {
+  letterChoices: LetterChoice[];
+  selectedLetter: LetterChoice | null;
+  isHovable: boolean;
+  onLetterChoiceClick: (letterChoice: LetterChoice) => void;
+}) => {
+  return letterChoices.map((letterChoice, idx) => {
+    const incorrect = selectedLetter === letterChoice;
+    let className = `filling-letter ${letterChoice.letter} `;
+    if (incorrect) className += 'anim-incorrect-letter';
+
+    return (
+      <Text
+        key={idx}
+        w={12}
+        h={12}
+        fontSize="3xl"
+        textAlign="center"
+        color="white"
+        fontWeight="bold"
+        borderBottom="4px solid white"
+        transition="0.5s all"
+        cursor="pointer"
+        borderColor={incorrect ? 'red.500' : undefined}
+        className={className}
+        _hover={
+          isHovable
+            ? {
+                transform: 'scale(1.1)',
+              }
+            : undefined
+        }
+        onClick={() => {
+          onLetterChoiceClick(letterChoice);
+        }}
+      >
+        {letterChoice.letter}
+      </Text>
+    );
+  });
 };
 
 export default BlankFillGame;
