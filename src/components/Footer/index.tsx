@@ -26,7 +26,7 @@ function Footer() {
           }}
         >
           <Text align="center">
-            Easy Start German - Unsure Where To Begin? Simply Solve Quizzes!
+            Easy German Start - Unsure Where To Begin? Simply Solve Quizzes!
           </Text>
           <Link
             to="https://github.com/hsk-kr/easy-german-start"

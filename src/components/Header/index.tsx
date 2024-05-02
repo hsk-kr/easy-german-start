@@ -52,7 +52,7 @@ function Header() {
                   textShadow: '0 0 10px #03bcf4, 0 0 20px #04bcf4',
                 }}
               >
-                Easy Start German
+                Easy German Start
               </Text>
             </Link>
             <DesktopNavbar />
