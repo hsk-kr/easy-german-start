@@ -25,7 +25,7 @@ import IntroCard from '../../components/IntroCard';
 import { getImgUrlWithBaseUrl } from '../../libs/const';
 import BlankFillGame from '../../components/BlankFillGame';
 import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
-import Certificate from '../../components/Certiicate';
+import Certificate from '../../components/Certificate';
 import dayjs from 'dayjs';
 import DataLoader from '../../components/DataLoader';
 import { FaGithub, FaQuestion } from 'react-icons/fa';

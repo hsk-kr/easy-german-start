@@ -177,7 +177,7 @@ const Certificate = ({
               align="center"
             />
             <Text
-              text="EASY GERMAN"
+              text="EASY GERMAN START"
               color="#38A169"
               x={0}
               width={STAGE_WIDTH}

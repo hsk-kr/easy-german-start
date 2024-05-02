@@ -7,7 +7,7 @@ import useHistory from '../../hooks/useHistory';
 import { History } from '../../types/history';
 import FullscreenLoading from '../../components/FullscreenLoading';
 import { fullHeightInsideTemplate } from '../../libs/const';
-import Certificate from '../../components/Certiicate';
+import Certificate from '../../components/Certificate';
 
 function CompletionPage() {
   const [searchParams] = useSearchParams();
