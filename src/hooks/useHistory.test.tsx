@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import useHistory, { HistoryProvider } from './useHistory';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import {
   generateHistoriesBetweenDates,
   generateHistoryWithDummy,
