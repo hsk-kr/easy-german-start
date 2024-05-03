@@ -27,7 +27,7 @@ interface HistoryContextType {
   setHistories: typeof setHistories;
   getHistories: typeof getHistories;
   clearHistories: typeof clearHistories;
-  streak: { cnt: number; doneToday: boolean } | undefined;
+  streak: { cnt: number; doneToday: boolean };
 }
 
 const HistoryContext = createContext<HistoryContextType>(null!);
@@ -40,7 +40,7 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
   >(() => new Map()); // sectionIdx, progressValue(0~100)
   const { sections } = useLessons();
   const streak = useMemo(() => {
-    if (!h) return undefined;
+    if (!h) return { cnt: 0, doneToday: false };
 
     const today = dayjs.utc();
     let cur = today;
@@ -52,9 +52,13 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
     };
 
     for (let i = h.length - 1; i >= 0; i--) {
-      const completedDateAsDayjs = dayjs(h[i].completedDate);
+      const completedDateAsDayjs = dayjs.utc(
+        h[i].completedDate.replace(/\./g, '-')
+      );
       if (i <= h.length - 2) {
-        const previousDate = dayjs(h[i + 1].completedDate);
+        const previousDate = dayjs.utc(
+          h[i + 1].completedDate.replace(/\./g, '-')
+        );
         const sameDayWithPreviousHistory = isSameDay(
           completedDateAsDayjs,
           previousDate
@@ -71,7 +75,6 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
           i++;
           continue;
         } else {
-          console.log('fuck');
           break;
         }
       } else {

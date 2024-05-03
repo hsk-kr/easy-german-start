@@ -54,7 +54,9 @@ const Certificate = ({
   const [iconImg] = useImage('/icons/icon.png');
   const STAGE_WIDTH = 1024,
     STAGE_HEIGHT = 768;
-  const date = dayjs(completedDate).format('YYYY.MM.DD');
+  const date = dayjs
+    .utc(completedDate.replace(/\./g, '-'))
+    .format('YYYY.MM.DD');
 
   const downloadCertificate = () => {
     if (!stageRef.current) return;

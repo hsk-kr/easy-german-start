@@ -3,33 +3,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ActivityChart from '.';
 import { History } from '../../types/history';
 import dayjs, { Dayjs } from 'dayjs';
-
-const generateHistoryWithDummy = (completedDate: string | Dayjs): History => ({
-  sectionIndex: 0,
-  lessonIndex: 0,
-  lessonTitle: 'lessonTitle',
-  lessonDesc: 'lessonDesc',
-  completedDate:
-    typeof completedDate === 'string'
-      ? completedDate
-      : completedDate.format('YYYY.MM.DD'),
-});
-
-const generateHistoriesBetweenDates = (
-  startDate: Dayjs,
-  endDate: Dayjs
-): History[] => {
-  let cur = startDate.hour(1);
-  const endDateWithTime = endDate.hour(23);
-  const histories: History[] = [];
-
-  while (cur <= endDateWithTime) {
-    histories.push(generateHistoryWithDummy(cur));
-    cur = cur.add(1, 'day');
-  }
-
-  return histories;
-};
+import {
+  generateHistoriesBetweenDates,
+  generateHistoryWithDummy,
+} from '../../libs/test-utils';
 
 const getElements = async () => {
   const totalActivityDays = await screen.findByTestId('total-activity-days');

@@ -40,7 +40,7 @@ const RecentActivities = ({ onLoad }: RecentActivitiesProps) => {
       id: reversedActivities.length - hIndex - 1,
       title: h.lessonTitle,
       desc: h.lessonDesc,
-      date: dayjs.utc(h.completedDate),
+      date: dayjs.utc(h.completedDate.replace(/\./g, '-')),
     }));
   }, [reversedActivities, numHistories]);
 

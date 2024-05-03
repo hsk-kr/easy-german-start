@@ -77,7 +77,8 @@ function ActivityChart({ histories, onLoad }: ActivityChartProps) {
 
     for (const history of histories) {
       // To calculate the exact different day using diff func.
-      const completedDateAsDayjs = dayjs(history.completedDate)
+      const completedDateAsDayjs = dayjs
+        .utc(history.completedDate.replace(/\./g, '-'))
         .set('hour', 0)
         .set('minute', 0)
         .set('second', 0)
