@@ -472,10 +472,7 @@ function ContributionGuide() {
         >
           Be part of our community and share your thoughts with us!
         </Text>
-        <Link
-          to="https://github.com/hsk-kr/easy-german-start/issues"
-          target="_blank"
-        >
+        <Link to={import.meta.env.VITE_GITHUB_REPO_URL} target="_blank">
           <Button
             size={['sm', 'md', 'lg']}
             leftIcon={<FaGithub />}

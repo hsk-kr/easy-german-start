@@ -17,6 +17,7 @@ import {
 import { History } from '../types/history';
 import useLessons from './useLessons';
 import dayjs, { Dayjs } from 'dayjs';
+import { convertDateFromString } from '../dayjs';
 
 interface HistoryContextType {
   loading: boolean;
@@ -52,13 +53,9 @@ export const HistoryProvider = ({ children }: { children: ReactNode }) => {
     };
 
     for (let i = h.length - 1; i >= 0; i--) {
-      const completedDateAsDayjs = dayjs.utc(
-        h[i].completedDate.replace(/\./g, '-')
-      );
+      const completedDateAsDayjs = convertDateFromString(h[i].completedDate);
       if (i <= h.length - 2) {
-        const previousDate = dayjs.utc(
-          h[i + 1].completedDate.replace(/\./g, '-')
-        );
+        const previousDate = convertDateFromString(h[i + 1].completedDate);
         const sameDayWithPreviousHistory = isSameDay(
           completedDateAsDayjs,
           previousDate

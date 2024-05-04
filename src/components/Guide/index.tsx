@@ -10,6 +10,8 @@ const Guide = ({ message }: GuideProps) => {
 
   if (!visible) return null;
 
+  const isMessageList = typeof message === 'object';
+
   return (
     <Flex
       w="100vw"
@@ -32,7 +34,7 @@ const Guide = ({ message }: GuideProps) => {
       onClick={() => setVisible(false)}
       p={4}
     >
-      {typeof message === 'object' ? (
+      {isMessageList ? (
         message.map((m, mi) => (
           <Text key={mi} fontSize="x-large">
             {m}

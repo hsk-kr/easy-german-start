@@ -4,11 +4,12 @@
  * @returns new array but each item is the same as it was
  */
 export const shuffleArray = <T>(arr: T[]) => {
+  const copiedArr = [...arr];
   const newArr = [];
 
-  while (arr.length > 0) {
-    const randIdx = Math.floor(Math.random() * arr.length);
-    newArr.push(arr.splice(randIdx, 1)[0]);
+  while (copiedArr.length > 0) {
+    const randIdx = Math.floor(Math.random() * copiedArr.length);
+    newArr.push(copiedArr.splice(randIdx, 1)[0]);
   }
 
   return newArr;

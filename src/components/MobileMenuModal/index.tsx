@@ -60,7 +60,6 @@ function Profile() {
       <Link to="/profile">
         <Flex columnGap={2}>
           <Avatar
-            src="https://bit.ly/broken-link"
             size="sm"
             cursor="pointer"
             transition="all 0.2s"
@@ -68,9 +67,7 @@ function Profile() {
               opacity: 0.8,
             }}
           />
-          {streak !== undefined && (
-            <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
-          )}
+          <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
         </Flex>
       </Link>
     </Flex>

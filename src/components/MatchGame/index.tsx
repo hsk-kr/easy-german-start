@@ -13,7 +13,15 @@ interface MatchGameProps {
   onClear: VoidFunction;
 }
 
-type Word = { word: string; desc: string };
+interface Word {
+  word: string;
+  desc: string;
+}
+
+interface IndicesPair {
+  left: number;
+  right: number;
+}
 
 type CardStatus = 'selected' | 'correct' | 'incorrect' | 'none';
 
@@ -22,12 +30,15 @@ const keyMapping = {
   right: ['a', 's', 'd', 'f', 'g'],
 };
 
+const initialIndicesPair = Object.freeze({
+  left: -1,
+  right: -1,
+});
+
 const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   const [words, setWords] = useState<Word[][]>([]);
   const [round, setRound] = useState(-1);
   const currentRoundWordPairs = useMemo<{ left: Word[]; right: Word[] }>(() => {
-    // Shuffle current Round's words and make two arrays, left and right.
-    // left and right has the words in a different order.
     if (round === -1 || words.length === 0 || words[0].length === 0)
       return { left: [], right: [] };
 
@@ -35,6 +46,7 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
       return shuffleArray([...words[round]]);
     };
 
+    // left: German Words, right: English definitions
     return {
       left: getRandomWords(),
       right: getRandomWords(),
@@ -42,29 +54,32 @@ const MatchGame = ({ lesson, onClear }: MatchGameProps) => {
   }, [round, words]);
 
   const handleClear = () => {
-    if (round < words.length - 1) {
-      setRound((prevRound) => prevRound + 1);
+    const allRoundCleared = round === words.length - 1;
+    if (allRoundCleared) {
+      onClear();
       return;
     }
 
-    // When all the rounds are cleared
-    onClear();
+    setRound((prevRound) => prevRound + 1);
   };
 
   useEffect(() => {
     // An array in words has the {EACH_ROUND_WORD_CNT} numbers of words from lesson.words.
     const EACH_ROUND_WORD_CNT = 5;
-    const newWords: typeof words = [[]];
+    const newWords: Word[][] = [];
 
-    for (const w of lesson.words) {
-      newWords[newWords.length - 1].push({
-        word: w.word,
-        desc: w.desc,
-      });
+    const words = shuffleArray(lesson.words);
+    let n = 0;
 
-      if (newWords[newWords.length - 1].length === EACH_ROUND_WORD_CNT) {
-        newWords.push([]);
-      }
+    while (n <= lesson.words.length) {
+      newWords.push(
+        words.slice(n, EACH_ROUND_WORD_CNT + n).map((w) => ({
+          word: w.word,
+          desc: w.desc,
+        }))
+      );
+
+      n += EACH_ROUND_WORD_CNT;
     }
 
     setWords(newWords);
@@ -98,35 +113,19 @@ const WordPairs = ({
   onClear: VoidFunction;
 }) => {
   const [correctWords, setCorrectWords] = useState<string[]>([]);
-  const [selectedIndices, setSelectedIndices] = useState<{
-    left: number;
-    right: number;
-  }>({
-    left: -1,
-    right: -1,
-  });
+  const [selectedIndices, setSelectedIndices] =
+    useState<IndicesPair>(initialIndicesPair);
   // When left and right doesn't match, the indices is stored here.
-  const [prevIncorrectIndices, setPrevIncorrectIndices] = useState<{
-    left: number;
-    right: number;
-  }>({
-    left: -1,
-    right: -1,
-  });
+  const [prevIncorrectIndices, setPrevIncorrectIndices] =
+    useState<IndicesPair>(initialIndicesPair);
   const { speak } = useTTS({ useRandomVoice: true });
 
   const resetPrevIncorrectIndicies = useCallback(() => {
-    setPrevIncorrectIndices({
-      left: -1,
-      right: -1,
-    });
+    setPrevIncorrectIndices(initialIndicesPair);
   }, []);
 
   const resetSelectedIndicies = () => {
-    setSelectedIndices({
-      left: -1,
-      right: -1,
-    });
+    setSelectedIndices(initialIndicesPair);
   };
 
   const elements = useMemo(() => {

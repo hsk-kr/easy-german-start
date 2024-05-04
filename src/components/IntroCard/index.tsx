@@ -71,7 +71,7 @@ const IntroCard = ({
                   gap={2}
                   key={idx}
                   justifyContent={
-                    imgAlign === 'left' ? 'flex-end' : 'flex-starta'
+                    imgAlign === 'left' ? 'flex-end' : 'flex-start'
                   }
                   alignItems="center"
                 >

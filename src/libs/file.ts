@@ -23,3 +23,22 @@ export const downloadURIAsFile = (
     URL.revokeObjectURL(uri);
   }
 };
+
+/**
+ * Returns file content from the file param
+ * @param file File to be read
+ * @returns File Content
+ */
+export const readFile = (file: File): Promise<string> => {
+  const fileReader = new FileReader();
+  fileReader.readAsText(file);
+
+  return new Promise((resolve, reject) => {
+    fileReader.onload = () => {
+      resolve(fileReader.result as string);
+    };
+    fileReader.onerror = () => {
+      reject(`Failed to read file: ${file.name}`);
+    };
+  });
+};

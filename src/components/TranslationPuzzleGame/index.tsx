@@ -117,7 +117,7 @@ const Puzzle = ({
               ? {
                   bg: '#74b9ff80',
                 }
-              : {}
+              : undefined
           }
           onAnimationEnd={() => setErrorPuzzleIndex(-1)}
           className={errorPuzzleIndex === index ? 'anim-incorrect-puzzle' : ''}

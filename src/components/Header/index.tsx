@@ -64,12 +64,9 @@ function Header() {
               md: 'flex',
             }}
           >
-            {streak !== undefined && (
-              <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
-            )}
+            <StreakBadge number={streak.cnt} doneToday={streak.doneToday} />
             <Link to="/profile">
               <Avatar
-                src="https://bit.ly/broken-link"
                 size="sm"
                 cursor="pointer"
                 transition="all 0.2s"

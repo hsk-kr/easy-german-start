@@ -33,7 +33,8 @@ const BlankFillGame = ({ lesson, onClear }: BlankFillGameProps) => {
   const handleGameOneStageClear = () => {
     speak(words[currentWordIdx].word);
     const nextWordIdx = currentWordIdx + 1;
-    if (nextWordIdx === words.length) {
+    const hasAllStagesDone = nextWordIdx === words.length;
+    if (hasAllStagesDone) {
       onClear();
       return;
     }
@@ -178,7 +179,8 @@ const Game = ({ word, onClear }: { word?: string; onClear: VoidFunction }) => {
     );
     setGuessingLetters((prevLetter) =>
       prevLetter.map((l) => {
-        if (l === nextLetterToFill) {
+        const isTargetLeter = l === nextLetterToFill;
+        if (isTargetLeter) {
           return {
             ...l,
             hidden: false,

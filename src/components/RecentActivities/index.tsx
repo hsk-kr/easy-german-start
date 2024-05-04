@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import useHistory from '../../hooks/useHistory';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { convertDateFromString } from '../../dayjs';
 
 interface ActivityProps {
   no: number;
@@ -40,7 +41,7 @@ const RecentActivities = ({ onLoad }: RecentActivitiesProps) => {
       id: reversedActivities.length - hIndex - 1,
       title: h.lessonTitle,
       desc: h.lessonDesc,
-      date: dayjs.utc(h.completedDate.replace(/\./g, '-')),
+      date: convertDateFromString(h.completedDate),
     }));
   }, [reversedActivities, numHistories]);
 

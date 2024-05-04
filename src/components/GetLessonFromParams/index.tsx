@@ -32,7 +32,7 @@ const GetLessonFromParams = ({ onLoad }: GetLessonFromParamsProps) => {
   // if it redirects, returns true. Otherwise, returns false.
   const redirectHomeIfParamsIsInvalid = ({ section, lesson }: SearchParam) => {
     try {
-      if (section < 0 || lesson < 0) {
+      if (section === -1 || lesson === -1) {
         throw new Error('section or lesson are not a valid index.');
       }
 

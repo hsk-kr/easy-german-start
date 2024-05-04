@@ -2,7 +2,7 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { ChangeEvent, useRef } from 'react';
 import useHistory from '../../hooks/useHistory';
-import { downloadURIAsFile } from '../../libs/file';
+import { downloadURIAsFile, readFile } from '../../libs/file';
 
 const DataLoader = () => {
   const { getHistories, setHistories, clearHistories } = useHistory();
@@ -11,23 +11,9 @@ const DataLoader = () => {
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
 
-    const readFile = (file: File): Promise<string> => {
-      const fileReader = new FileReader();
-      fileReader.readAsText(file);
-
-      return new Promise((resolve, reject) => {
-        fileReader.onload = () => {
-          resolve(fileReader.result as string);
-        };
-        fileReader.onerror = () => {
-          reject('Failed to read file');
-        };
-      });
-    };
-
     const file = e.target.files[0];
-    const jsonText = await readFile(file);
-    importData(jsonText);
+    const json = await readFile(file);
+    importData(json);
   };
 
   const importData = (json: string) => {
