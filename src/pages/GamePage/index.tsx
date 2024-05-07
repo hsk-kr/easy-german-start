@@ -62,7 +62,6 @@ const GamePage = ({ skipGame }: GamePageProps) => {
   // complete the lesson without playing for test purpose
   useEffect(() => {
     if (!skipGame || !currentLesson) return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     completeAndNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLesson]);

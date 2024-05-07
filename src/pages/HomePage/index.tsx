@@ -101,7 +101,6 @@ function EntrySection() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       clearTimeout(tmRef.current.tmChangeImg);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

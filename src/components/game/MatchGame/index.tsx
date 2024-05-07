@@ -276,7 +276,6 @@ const Card = ({
   useEffect(() => {
     // when the status is changed to `incorrect`, the animation will start once.
     setIncorrectAnim(status === 'incorrect');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

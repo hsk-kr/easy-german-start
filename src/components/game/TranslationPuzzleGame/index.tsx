@@ -287,7 +287,6 @@ const TranslationPuzzleGame = ({
     };
 
     pickTwoExamplesFromEachAndUpdateExamples();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lesson]);
 
   const progress = Math.floor((currentIdx / examples.length) * 100);
