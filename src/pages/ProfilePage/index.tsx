@@ -1,11 +1,11 @@
 import { Box, Container } from '@chakra-ui/react';
-import ActivityChart from '../../components/ActivityChart';
-import DefaultTemplate from '../../components/DefaultTemplate';
-import RecentActivities from '../../components/RecentActivities';
-import DataLoader from '../../components/DataLoader';
+import ActivityChart from '../../components/profile/ActivityChart';
+import DefaultTemplate from '../../components/common/DefaultTemplate';
+import RecentActivities from '../../components/profile/RecentActivities';
+import DataLoader from '../../components/common/DataLoader';
 import useHistory from '../../hooks/useHistory';
 import { useCallback, useState } from 'react';
-import FullscreenLoading from '../../components/FullscreenLoading';
+import FullscreenLoading from '../../components/common/FullscreenLoading';
 
 function ProfilePage() {
   const [cntLoaded, setCntLoaded] = useState(0);

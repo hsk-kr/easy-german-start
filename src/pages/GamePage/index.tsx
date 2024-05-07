@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import DefaultTemplate from '../../components/DefaultTemplate';
-import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
-import BlankFillGame from '../../components/BlankFillGame';
-import MatchGame from '../../components/MatchGame';
-import GetLessonFromParams from '../../components/GetLessonFromParams';
+import DefaultTemplate from '../../components/common/DefaultTemplate';
+import TranslationPuzzleGame from '../../components/game/TranslationPuzzleGame';
+import BlankFillGame from '../../components/game/BlankFillGame';
+import MatchGame from '../../components/game/MatchGame';
+import GetLessonFromParams from '../../components/function/GetLessonFromParams';
 import { Lesson } from '../../types/lesson';
 import useHistory from '../../hooks/useHistory';
 import { useNavigate } from 'react-router-dom';

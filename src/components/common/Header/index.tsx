@@ -9,10 +9,10 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
-import DesktopNavbar from '../DesktopNavbar';
+import DesktopNavbar from '../../common/DesktopNavbar';
 import MobileMenuModal from '../MobileMenuModal';
 import StreakBadge from '../StreakBadge';
-import useHistory from '../../hooks/useHistory';
+import useHistory from '../../../hooks/useHistory';
 
 function Header() {
   const mobileMenuModal = useDisclosure();

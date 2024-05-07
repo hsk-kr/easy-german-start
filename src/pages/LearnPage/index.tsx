@@ -1,11 +1,11 @@
 import { Container, VStack } from '@chakra-ui/react';
-import DefaultTemplate from '../../components/DefaultTemplate';
-import QuizSection from '../../components/QuizSection';
+import DefaultTemplate from '../../components/common/DefaultTemplate';
+import QuizSection from '../../components/learn/QuizSection';
 import { useMemo } from 'react';
 import useLessons from '../../hooks/useLessons';
 import { useNavigate } from 'react-router-dom';
 import useHistory, { generateHistoryMapKey } from '../../hooks/useHistory';
-import FullscreenLoading from '../../components/FullscreenLoading';
+import FullscreenLoading from '../../components/common/FullscreenLoading';
 
 export function LearnPage() {
   const { sections } = useLessons();

@@ -1,7 +1,7 @@
 import { Box, Flex, Select, Text, Tooltip } from '@chakra-ui/react';
 import dayjs, { Dayjs } from 'dayjs';
 import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from 'react';
-import { History } from '../../types/history';
+import { History } from '../../../types/history';
 
 const PAST_YEAR = 'past year' as const;
 

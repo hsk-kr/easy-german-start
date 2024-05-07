@@ -1,12 +1,12 @@
 'use client';
 
 import { Box, Container, Text, Flex, Progress } from '@chakra-ui/react';
-import { Lesson } from '../../types/lesson';
+import { Lesson } from '../../../types/lesson';
 import { useEffect, useMemo, useState } from 'react';
-import useScreen from '../../hooks/useScreen';
+import useScreen from '../../../hooks/useScreen';
 import Guide from '../Guide';
-import { shuffleArray } from '../../libs/array';
-import useTTS from '../../hooks/useTTS';
+import { shuffleArray } from '../../../libs/array';
+import useTTS from '../../../hooks/useTTS';
 
 interface BlankFillGameProps {
   lesson: Lesson;

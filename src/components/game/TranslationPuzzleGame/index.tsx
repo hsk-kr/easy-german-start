@@ -1,10 +1,10 @@
 import { Box, Container, Flex, Progress, Text } from '@chakra-ui/react';
-import { Example, Lesson } from '../../types/lesson';
+import { Example, Lesson } from '../../../types/lesson';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import Guide from '../Guide';
-import useScreen from '../../hooks/useScreen';
-import useTTS from '../../hooks/useTTS';
-import { shuffleArray } from '../../libs/array';
+import useScreen from '../../../hooks/useScreen';
+import useTTS from '../../../hooks/useTTS';
+import { shuffleArray } from '../../../libs/array';
 
 interface TranslationPuzzleGameProps {
   lesson: Lesson;

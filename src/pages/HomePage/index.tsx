@@ -12,7 +12,7 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import DefaultTemplate from '../../components/DefaultTemplate';
+import DefaultTemplate from '../../components/common/DefaultTemplate';
 import FirstImage from './res/a.webp';
 import SecondImage from './res/b.webp';
 import ThirdImage from './res/c.webp';
@@ -20,14 +20,14 @@ import FourthImage from './res/d.webp';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Lesson } from '../../types/lesson';
-import MatchGame from '../../components/MatchGame';
-import IntroCard from '../../components/IntroCard';
+import MatchGame from '../../components/game/MatchGame';
+import IntroCard from '../../components/home/IntroCard';
 import { getImgUrlWithBaseUrl } from '../../libs/const';
-import BlankFillGame from '../../components/BlankFillGame';
-import TranslationPuzzleGame from '../../components/TranslationPuzzleGame';
-import Certificate from '../../components/Certificate';
+import BlankFillGame from '../../components/game/BlankFillGame';
+import TranslationPuzzleGame from '../../components/game/TranslationPuzzleGame';
+import Certificate from '../../components/common/Certificate';
 import dayjs from 'dayjs';
-import DataLoader from '../../components/DataLoader';
+import DataLoader from '../../components/common/DataLoader';
 import { FaGithub, FaQuestion } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 

@@ -1,8 +1,8 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { ChangeEvent, useRef } from 'react';
-import useHistory from '../../hooks/useHistory';
-import { downloadURIAsFile, readFile } from '../../libs/file';
+import useHistory from '../../../hooks/useHistory';
+import { downloadURIAsFile, readFile } from '../../../libs/file';
 
 const DataLoader = () => {
   const { getHistories, setHistories, clearHistories } = useHistory();

@@ -1,9 +1,9 @@
 import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import useHistory from '../../hooks/useHistory';
+import useHistory from '../../../hooks/useHistory';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { convertDateFromString } from '../../dayjs';
+import { convertDateFromString } from '../../../dayjs';
 
 interface ActivityProps {
   no: number;

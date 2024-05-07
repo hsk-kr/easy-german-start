@@ -3,7 +3,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MouseEvent, useEffect } from 'react';
 import StreakBadge from '../StreakBadge';
-import useHistory from '../../hooks/useHistory';
+import useHistory from '../../../hooks/useHistory';
 
 interface MobileMenuModalProps {
   visible?: boolean;

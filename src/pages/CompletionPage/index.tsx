@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import DefaultTemplate from '../../components/DefaultTemplate';
+import DefaultTemplate from '../../components/common/DefaultTemplate';
 import { Box, Container, Flex, Text as ChakraText } from '@chakra-ui/react';
 import useScreen from '../../hooks/useScreen';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useHistory from '../../hooks/useHistory';
 import { History } from '../../types/history';
-import FullscreenLoading from '../../components/FullscreenLoading';
+import FullscreenLoading from '../../components/common/FullscreenLoading';
 import { fullHeightInsideTemplate } from '../../libs/const';
-import Certificate from '../../components/Certificate';
+import Certificate from '../../components/common/Certificate';
 
 function CompletionPage() {
   const [searchParams] = useSearchParams();

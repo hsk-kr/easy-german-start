@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import Guide from '../Guide';
-import { Lesson } from '../../types/lesson';
-import useScreen from '../../hooks/useScreen';
-import useTTS from '../../hooks/useTTS';
-import { shuffleArray } from '../../libs/array';
+import { Lesson } from '../../../types/lesson';
+import useScreen from '../../../hooks/useScreen';
+import useTTS from '../../../hooks/useTTS';
+import { shuffleArray } from '../../../libs/array';
 
 interface MatchGameProps {
   lesson: Lesson;

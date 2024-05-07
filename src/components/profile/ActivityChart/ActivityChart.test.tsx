@@ -1,12 +1,12 @@
 import { test, expect, describe } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import ActivityChart from '.';
-import { History } from '../../types/history';
+import { History } from '../../../types/history';
 import dayjs, { Dayjs } from 'dayjs';
 import {
   generateHistoriesBetweenDates,
   generateHistoryWithDummy,
-} from '../../libs/test-utils';
+} from '../../../libs/test-utils';
 
 const getElements = async () => {
   const totalActivityDays = await screen.findByTestId('total-activity-days');
