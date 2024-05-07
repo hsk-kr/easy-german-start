@@ -56,18 +56,20 @@ const ImageRow = styled(Flex)`
 
 function EntrySection() {
   const imgs = [FirstImage, SecondImage, ThirdImage, FourthImage];
-  const [imgIndices, setImgIndices] = useState([0, 1, 2, 3]);
+  // imgIndices means, the range of images is from 0 to 3.
+  const [imgIndices, setImgIndices] = useState([0, 1, 2, 3]); // image index(ranging from 0 to 3 of [0: top left, 1: top right, 2: bottom left, 3: bottom right]
   const [animImgIndex, setAnimImgIndex] = useState(-1);
   const tmRef = useRef<{ tmChangeImg: NodeJS.Timeout | undefined }>({
     tmChangeImg: undefined,
   });
-  const prevRandomIdx = useRef<number>(-1); // prevent changing the same image that changed right before.
+  const prevRandomIdx = useRef<number>(-1); // prevent to change the same image.
 
   const handleAnimEnd = () => setAnimImgIndex(-1);
 
   const changeImg = () => {
     tmRef.current.tmChangeImg = setTimeout(
       () => {
+        // 0: top left, 1: top right, 2: bottom left, 3: bottom right
         let randomIdx: number;
 
         do {

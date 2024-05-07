@@ -9,6 +9,7 @@ import './dayjs';
 import './anim.css';
 import theme from './theme';
 import { HistoryProvider } from './hooks/useHistory';
+import NotFound from './pages/NotFoundPage';
 
 const router = createBrowserRouter(
   [
@@ -31,6 +32,10 @@ const router = createBrowserRouter(
     {
       path: 'completion',
       element: <CompletionPage />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
     },
   ],
   {
