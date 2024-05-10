@@ -13,10 +13,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import DefaultTemplate from '../../components/common/DefaultTemplate';
-import FirstImage from './res/a.webp';
-import SecondImage from './res/b.webp';
-import ThirdImage from './res/c.webp';
-import FourthImage from './res/d.webp';
+import Generic from './res/generic.webp';
+import Sandwich from './res/sandwich.webp';
+import Beer from './res/beer.webp';
+import BigFlags from './res/bigFlags.webp';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Lesson } from '../../types/lesson';
@@ -55,46 +55,48 @@ const ImageRow = styled(Flex)`
 `;
 
 function EntrySection() {
-  const imgs = [FirstImage, SecondImage, ThirdImage, FourthImage];
-  // imgIndices means, the range of images is from 0 to 3.
-  const [imgIndices, setImgIndices] = useState([0, 1, 2, 3]); // image index(ranging from 0 to 3 of [0: top left, 1: top right, 2: bottom left, 3: bottom right]
-  const [animImgIndex, setAnimImgIndex] = useState(-1);
+  // One of the images will be blurred at random, and then changed to another image.  Identical images may be displayed side by side.
+  const NONE_SELECTED = -1;
+  const allImgs = [Generic, Sandwich, Beer, BigFlags];
+  const [imgChoiceArrary, setImgChoiceArrary] = useState([0, 1, 2, 3]);
+  const [imgIdxToChange, setImgIdxToChange] = useState(NONE_SELECTED);
   const tmRef = useRef<{ tmChangeImg: NodeJS.Timeout | undefined }>({
     tmChangeImg: undefined,
-  });
-  const prevRandomIdx = useRef<number>(-1); // prevent to change the same image.
+  });  
+  const prevImgIdx = useRef<number>(NONE_SELECTED); 
 
-  const handleAnimEnd = () => setAnimImgIndex(-1);
+  const handleAnimEnd = () => setImgIdxToChange(NONE_SELECTED);
 
-  const changeImg = () => {
+  const randomChangeOneImg = () => {
     tmRef.current.tmChangeImg = setTimeout(
       () => {
-        // 0: top left, 1: top right, 2: bottom left, 3: bottom right
+        // choose a random index within imgs.  Do not choose the index that was chosen right before.
         let randomIdx: number;
-
         do {
-          randomIdx = Math.floor(Math.random() * imgIndices.length);
-        } while (prevRandomIdx.current === randomIdx);
-        prevRandomIdx.current = randomIdx;
+          randomIdx = Math.floor(Math.random() * allImgs.length);
+        } while (prevImgIdx.current === randomIdx);
+        prevImgIdx.current = randomIdx;
 
-        setImgIndices((prevImgIndices) => {
-          const newImgIndices = [...prevImgIndices];
-          const nextRandImgIdx = Math.floor(Math.random() * imgs.length);
-          newImgIndices[randomIdx] = nextRandImgIdx;
-          return newImgIndices;
+        setImgChoiceArrary((prevImgChoiceArrary) => {
+          const newImgChoiceArrary = [...prevImgChoiceArrary];
+          // chooose random index of the image choice array
+          const newImgIdx = Math.floor(Math.random() * allImgs.length);
+          // insert the index of a new image from imgs there
+          newImgChoiceArrary[randomIdx] = newImgIdx;
+          return newImgChoiceArrary;
         });
-
-        setAnimImgIndex(randomIdx);
+        
+        setImgIdxToChange(randomIdx);
       },
       1000 + Math.floor(Math.random() * 500)
     );
   };
 
   useEffect(() => {
-    if (animImgIndex === -1) changeImg();
+    if (imgIdxToChange === NONE_SELECTED) randomChangeOneImg();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [animImgIndex]);
+  }, [imgIdxToChange]);
 
   useEffect(() => {
     return () => {
@@ -121,28 +123,28 @@ function EntrySection() {
         <ImageRow>
           <Image
             alt="learn german"
-            src={imgs[imgIndices[0]]}
-            className={animImgIndex === 0 ? 'anim-entry-image-change' : ''}
+            src={allImgs[imgChoiceArrary[0]]}
+            className={imgIdxToChange === 0 ? 'anim-entry-image-change' : ''}
             onAnimationEnd={handleAnimEnd}
           />
           <Image
             alt="learn german"
-            src={imgs[imgIndices[1]]}
-            className={animImgIndex === 1 ? 'anim-entry-image-change' : ''}
+            src={allImgs[imgChoiceArrary[1]]}
+            className={imgIdxToChange === 1 ? 'anim-entry-image-change' : ''}
             onAnimationEnd={handleAnimEnd}
           />
         </ImageRow>
         <ImageRow>
           <Image
             alt="learn german"
-            src={imgs[imgIndices[2]]}
-            className={animImgIndex === 2 ? 'anim-entry-image-change' : ''}
+            src={allImgs[imgChoiceArrary[2]]}
+            className={imgIdxToChange === 2 ? 'anim-entry-image-change' : ''}
             onAnimationEnd={handleAnimEnd}
           />
           <Image
             alt="learn german"
-            src={imgs[imgIndices[3]]}
-            className={animImgIndex === 3 ? 'anim-entry-image-change' : ''}
+            src={allImgs[imgChoiceArrary[3]]}
+            className={imgIdxToChange === 3 ? 'anim-entry-image-change' : ''}
             onAnimationEnd={handleAnimEnd}
           />
         </ImageRow>
